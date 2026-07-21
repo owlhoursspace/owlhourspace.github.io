@@ -66,20 +66,20 @@
   nav{
     position:sticky; top:0; z-index:100;
     display:flex; align-items:center; justify-content:space-between;
-    padding:0 24px; height:56px;
+    padding:22px 24px;
     background:rgba(8,17,28,0.85); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--hairline);
   }
   .nav-left{display:flex; align-items:center; gap:18px;}
   .nav-logo{
-    font-family:var(--serif); font-weight:600; font-size:15px; color:var(--ink);
-    text-decoration:none; display:flex; align-items:center; gap:8px;
+    font-family:var(--serif); font-weight:600; font-size:20px; color:var(--ink);
+    text-decoration:none; display:flex; align-items:center; gap:10px;
   }
-  .nav-logo img{width:20px; height:20px; object-fit:contain; display:block;}
+  .nav-logo img{width:26px; height:26px; object-fit:contain; display:block;}
   .nav-breadcrumb{font-family:var(--mono); font-size:11px; color:var(--ink-dim);}
   .nav-breadcrumb span{color:var(--ink-soft);}
-  .nav-links{display:flex; gap:24px;}
-  .nav-links a{font-size:13px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s;}
+  .nav-links{display:flex; gap:36px;}
+  .nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s;}
   .nav-links a:hover{color:var(--ink);}
 
   .page-content{flex:1;}
@@ -132,13 +132,13 @@
 
   /* ── Screenshot gallery ── */
   .shot-grid{display:grid; gap:16px;}
-  .shot-grid.cols-3{grid-template-columns:repeat(3, 1fr);}
   .shot-grid.cols-2{grid-template-columns:repeat(2, 1fr);}
+  .shot-grid.cols-1{grid-template-columns:1fr;}
   .shot-card{
     background:var(--surface); border:1px solid var(--hairline);
     border-radius:8px; overflow:hidden;
   }
-  .shot-card img{width:100%; aspect-ratio:3/2; object-fit:cover; display:block;}
+  .shot-card img{width:100%; height:auto; display:block;}
   .shot-caption{padding:12px 16px; font-size:12.5px; color:var(--ink-soft);}
   .shot-caption strong{color:var(--ink); font-weight:500;}
 
@@ -240,7 +240,7 @@
     display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
   }
   .footer-brand{display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:14px; color:var(--ink-soft); text-decoration:none;}
-  .footer-brand img{width:18px; height:18px; object-fit:contain;}
+  .footer-brand img{width:20px; height:20px; object-fit:contain;}
   .footer-brand span{font-family:var(--mono); font-weight:400; color:var(--ink-dim); font-size:12px;}
   footer .footer-links{display:flex; gap:20px;}
   footer a.footer-link{color:var(--ink-dim); font-size:12px; text-decoration:none; transition:color 0.15s;}
@@ -250,18 +250,17 @@
   @media (max-width:900px){
     .algo-grid{grid-template-columns:repeat(2, 1fr);}
     .feature-grid{grid-template-columns:repeat(2, 1fr);}
-    .shot-grid.cols-3{grid-template-columns:repeat(2, 1fr);}
   }
 
   @media (max-width:640px){
-    nav{padding:0 20px;}
+    nav{padding:22px 20px;}
     .nav-breadcrumb{display:none;}
     .hero, .section-wrap, .cta-wrap{padding-left:20px; padding-right:20px;}
     .hero{padding-top:48px;}
     footer{padding:20px;}
     .algo-grid{grid-template-columns:1fr;}
     .feature-grid{grid-template-columns:1fr;}
-    .shot-grid.cols-3, .shot-grid.cols-2{grid-template-columns:1fr;}
+    .shot-grid.cols-2{grid-template-columns:1fr;}
   }
 </style>
 </head>
@@ -310,7 +309,7 @@
   <div class="section-wrap" id="editor">
     <div class="section-label">Screenshots</div>
     <div class="section-title">See it in the Editor</div>
-    <div class="shot-grid cols-3">
+    <div class="shot-grid cols-2">
       <div class="shot-card">
         <img src="/assets/img/screenshots/easy-setup.webp" loading="lazy" width="900" height="600" alt="Setup Wizard adding the Blur renderer feature, then adding a BlurImage component to a UI Image">
         <div class="shot-caption"><strong>Easy Setup</strong> — Setup Wizard adds the renderer feature, then drop BlurImage on any Image.</div>
@@ -415,8 +414,7 @@
   <!-- ── Performance ── -->
   <div class="section-wrap" id="performance">
     <div class="section-label">Performance</div>
-    <div class="section-title">Only pay for what's visible</div>
-    <div class="shot-grid cols-2">
+    <div class="shot-grid cols-1">
       <div class="shot-card">
         <img src="/assets/img/screenshots/performance-scissor-culling.webp" loading="lazy" width="1344" height="896" alt="Diagram comparing zero-cost-when-idle behavior versus traditional always-on blur, plus a scissor culling comparison showing only visible panel regions being processed">
         <div class="shot-caption"><strong>Scissor culling</strong> — the GPU only processes the pixels behind visible panels, not the full screen.</div>
