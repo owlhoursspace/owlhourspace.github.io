@@ -164,26 +164,20 @@
   .dot.off{background:var(--hairline);}
 
   /* ── Feature grid ── */
-  .feature-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;}
+  .feature-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr);
+    gap:1px; background:var(--hairline); border:1px solid var(--hairline);
+    border-radius:8px; overflow:hidden;
+  }
   .feature-item{
-    display:flex; gap:16px; padding:20px 22px;
-    background:var(--surface); border:1px solid var(--hairline);
-    transition:background 0.15s;
+    background:var(--surface); padding:22px 24px; transition:background 0.15s;
   }
-  .feature-grid > .feature-item:first-child{border-radius:8px 8px 0 0;}
-  .feature-grid > .feature-item:nth-child(3){border-radius:0 8px 0 0;}
-  .feature-grid > .feature-item:nth-last-child(2){border-radius:0 0 0 8px;}
-  .feature-grid > .feature-item:last-child{border-radius:0 0 8px 0;}
   .feature-item:hover{background:var(--surface2);}
-  .feature-icon{
-    flex-shrink:0; width:32px; height:32px; border-radius:7px;
-    background:rgba(143,174,147,0.12); border:1px solid rgba(143,174,147,0.28);
-    display:flex; align-items:center; justify-content:center;
-    font-size:14px; color:var(--sage-tint); margin-top:1px;
-  }
-  .feature-item h3{font-size:13.5px; font-weight:500; color:var(--ink); margin-bottom:4px;}
-  .feature-item p{font-size:12.5px; color:var(--ink-soft); line-height:1.6;}
-  .feature-item code{
+  .feature-head{display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+  .feature-tag{font-size:15px; color:var(--sage-tint); line-height:1;}
+  .feature-name{font-size:14px; font-weight:500; color:var(--ink);}
+  .feature-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.6;}
+  .feature-desc code{
     font-family:var(--mono); font-size:11px;
     background:var(--surface2); color:var(--amber-tint);
     padding:1px 5px; border-radius:3px; border:1px solid var(--hairline);
@@ -254,9 +248,6 @@
     footer{padding:20px;}
     .algo-grid{grid-template-columns:1fr;}
     .feature-grid{grid-template-columns:1fr;}
-    .feature-grid > .feature-item{border-radius:0 !important;}
-    .feature-grid > .feature-item:first-child{border-radius:8px 8px 0 0 !important;}
-    .feature-grid > .feature-item:last-child{border-radius:0 0 8px 8px !important;}
   }
 </style>
 </head>
@@ -377,51 +368,33 @@
     <div class="feature-grid">
 
       <div class="feature-item">
-        <div class="feature-icon">⬡</div>
-        <div>
-          <h3>Multiple simultaneous presets</h3>
-          <p>Run Overlay, Camera, and World Space blur at the same time — each on its own RTHandle, fully isolated.</p>
-        </div>
+        <div class="feature-head"><span class="feature-tag">⬡</span><span class="feature-name">Multiple simultaneous presets</span></div>
+        <div class="feature-desc">Run Overlay, Camera, and World Space blur at the same time — each on its own RTHandle, fully isolated.</div>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon">◈</div>
-        <div>
-          <h3>Native RenderGraph API</h3>
-          <p>Built on URP 17+ RenderGraph from the ground up — no legacy command buffers, no camera stacking hacks.</p>
-        </div>
+        <div class="feature-head"><span class="feature-tag">◈</span><span class="feature-name">Native RenderGraph API</span></div>
+        <div class="feature-desc">Built on URP 17+ RenderGraph from the ground up — no legacy command buffers, no camera stacking hacks.</div>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon">⊕</div>
-        <div>
-          <h3>Frosted glass shaders</h3>
-          <p>Two ready-made shaders: <code>UI_Blur_Universal</code> for Canvas panels and <code>WorldObject</code> for 3D glass meshes with true IOR refraction.</p>
-        </div>
+        <div class="feature-head"><span class="feature-tag">⊕</span><span class="feature-name">Frosted glass shaders</span></div>
+        <div class="feature-desc">Two ready-made shaders: <code>UI_Blur_Universal</code> for Canvas panels and <code>WorldObject</code> for 3D glass meshes with true IOR refraction.</div>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon">◎</div>
-        <div>
-          <h3>Resolution-independent scaling</h3>
-          <p>Blur radius scales automatically with screen width — looks the same at 1080p and 4K without manual tweaking.</p>
-        </div>
+        <div class="feature-head"><span class="feature-tag">◎</span><span class="feature-name">Resolution-independent scaling</span></div>
+        <div class="feature-desc">Blur radius scales automatically with screen width — looks the same at 1080p and 4K without manual tweaking.</div>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon">⌘</div>
-        <div>
-          <h3>Setup Wizard</h3>
-          <p>One-click installation across all URP Renderer assets in your project. Working blur in under a minute.</p>
-        </div>
+        <div class="feature-head"><span class="feature-tag">⌘</span><span class="feature-name">Setup Wizard</span></div>
+        <div class="feature-desc">One-click installation across all URP Renderer assets in your project. Working blur in under a minute.</div>
       </div>
 
       <div class="feature-item">
-        <div class="feature-icon">⚡</div>
-        <div>
-          <h3>Runtime API</h3>
-          <p>Toggle presets, fade intensity, and read parameters at runtime. Smooth blur transitions without one-frame pop-in.</p>
-        </div>
+        <div class="feature-head"><span class="feature-tag">⚡</span><span class="feature-name">Runtime API</span></div>
+        <div class="feature-desc">Toggle presets, fade intensity, and read parameters at runtime. Smooth blur transitions without one-frame pop-in.</div>
       </div>
 
     </div>
@@ -436,24 +409,23 @@
         <div class="code-dot" style="background:#ff5f57"></div>
         <div class="code-dot" style="background:#febc2e"></div>
         <div class="code-dot" style="background:#28c840"></div>
-        <span class="code-filename">PauseMenuController.cs</span>
+        <span class="code-filename">PauseMenu.cs</span>
       </div>
-<pre><span class="cm">// Smooth fade on pause</span>
-<span class="kw">void</span> <span class="fn">Update</span>()
+<pre><span class="cm">// Pause menu with blur fade — current BlurImage API</span>
+[<span class="cl">SerializeField</span>] <span class="cl">BlurImage</span> <span class="nm">_blurImage</span>;
+
+<span class="kw">void</span> <span class="fn">OpenMenu</span>()
 {
-    <span class="kw">float</span> <span class="nm">target</span>  = _paused ? <span class="nu">1f</span> : <span class="nu">0f</span>;
-    <span class="kw">float</span> <span class="nm">current</span> = <span class="cl">Blur</span>.<span class="fn">GetIntensity</span>(<span class="cl">CanvasSpaceType</span>.<span class="nm">OverlayBeforePostProcessing</span>);
-    <span class="cl">Blur</span>.<span class="fn">SetIntensity</span>(
-        <span class="cl">CanvasSpaceType</span>.<span class="nm">OverlayBeforePostProcessing</span>,
-        <span class="cl">Mathf</span>.<span class="fn">MoveTowards</span>(<span class="nm">current</span>, <span class="nm">target</span>, <span class="cl">Time</span>.<span class="nm">deltaTime</span> * <span class="nu">3f</span>));
+    <span class="nm">gameObject</span>.<span class="fn">SetActive</span>(<span class="kw">true</span>);
+    <span class="nm">_blurImage</span>.<span class="fn">FadeIn</span>(<span class="nu">0.4f</span>);
+    <span class="cl">Time</span>.<span class="nm">timeScale</span> = <span class="nu">0f</span>;
 }
 
-<span class="cm">// React to preset state changes</span>
-<span class="kw">void</span> <span class="fn">OnEnable</span>()  => <span class="cl">Blur</span>.<span class="nm">OnPresetActiveChanged</span> += <span class="fn">OnBlurChanged</span>;
-<span class="kw">void</span> <span class="fn">OnDisable</span>() => <span class="cl">Blur</span>.<span class="nm">OnPresetActiveChanged</span> -= <span class="fn">OnBlurChanged</span>;
-
-<span class="kw">void</span> <span class="fn">OnBlurChanged</span>(<span class="cl">BlurPreset</span> <span class="nm">preset</span>)
-    => <span class="cl">Debug</span>.<span class="fn">Log</span>(<span class="st">$"{preset.name} → {preset.isActive}"</span>);</pre>
+<span class="kw">void</span> <span class="fn">CloseMenu</span>()
+{
+    <span class="nm">_blurImage</span>.<span class="fn">FadeOut</span>(<span class="nu">0.3f</span>);
+    <span class="cl">Time</span>.<span class="nm">timeScale</span> = <span class="nu">1f</span>;
+}</pre>
     </div>
   </div>
 
