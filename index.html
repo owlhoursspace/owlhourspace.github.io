@@ -66,20 +66,20 @@
   nav{
     position:sticky; top:0; z-index:100;
     display:flex; align-items:center; justify-content:space-between;
-    padding:0 24px; height:56px;
+    padding:22px 24px;
     background:rgba(8,17,28,0.85); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--hairline);
   }
   .nav-left{display:flex; align-items:center; gap:18px;}
   .nav-logo{
-    font-family:var(--serif); font-weight:600; font-size:15px; color:var(--ink);
-    text-decoration:none; display:flex; align-items:center; gap:8px;
+    font-family:var(--serif); font-weight:600; font-size:20px; color:var(--ink);
+    text-decoration:none; display:flex; align-items:center; gap:10px;
   }
-  .nav-logo img{width:20px; height:20px; object-fit:contain; display:block;}
+  .nav-logo img{width:26px; height:26px; object-fit:contain; display:block;}
   .nav-breadcrumb{font-family:var(--mono); font-size:11px; color:var(--ink-dim);}
   .nav-breadcrumb span{color:var(--ink-soft);}
-  .nav-links{display:flex; gap:24px;}
-  .nav-links a{font-size:13px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s;}
+  .nav-links{display:flex; gap:36px;}
+  .nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s;}
   .nav-links a:hover{color:var(--ink);}
 
   .page-content{flex:1;}
@@ -240,7 +240,7 @@
     display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
   }
   .footer-brand{display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:14px; color:var(--ink-soft); text-decoration:none;}
-  .footer-brand img{width:18px; height:18px; object-fit:contain;}
+  .footer-brand img{width:20px; height:20px; object-fit:contain;}
   .footer-brand span{font-family:var(--mono); font-weight:400; color:var(--ink-dim); font-size:12px;}
   footer .footer-links{display:flex; gap:20px;}
   footer a.footer-link{color:var(--ink-dim); font-size:12px; text-decoration:none; transition:color 0.15s;}
@@ -253,7 +253,7 @@
   }
 
   @media (max-width:640px){
-    nav{padding:0 20px;}
+    nav{padding:22px 20px;}
     .nav-breadcrumb{display:none;}
     .hero, .section-wrap, .cta-wrap{padding-left:20px; padding-right:20px;}
     .hero{padding-top:48px;}
