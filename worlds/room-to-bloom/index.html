@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room to Bloom — OwlHours</title>
+<meta name="description" content="A grown-up decorating game about turning empty rooms into places worth living in, one considered choice at a time.">
+<link rel="canonical" href="https://owlhours.space/worlds/room-to-bloom/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OwlHours">
+<meta property="og:title" content="Room to Bloom — OwlHours">
+<meta property="og:description" content="A grown-up decorating game about turning empty rooms into places worth living in, one considered choice at a time.">
+<meta property="og:url" content="https://owlhours.space/worlds/room-to-bloom/">
+<meta property="og:image" content="https://owlhours.space/assets/img/screenshots/room-to-bloom.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="theme-color" content="#08111C">
+<link rel="icon" type="image/png" href="/assets/img/owlhours-logo.png">
+<link rel="apple-touch-icon" href="/assets/img/owlhours-logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root{
+    --bg: #08111C;
+    --surface: #101B27;
+    --surface2: #16222F;
+    --ink: #ECE9E0;
+    --ink-soft: #A7B0A1;
+    --ink-dim: #6E7A69;
+    --sage: #8FAE93;
+    --sage-tint: #C7DDC8;
+    --amber: #E3A855;
+    --amber-tint: #F2CE97;
+    --plum: #B993A0;
+    --plum-tint: #E3C4CD;
+    --hairline: rgba(190,205,220,0.12);
+    --dot: rgba(190,205,220,0.10);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --serif: 'Fraunces', serif;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh; display:flex; flex-direction:column;
+    background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+    background-size: 26px 26px; background-attachment: fixed;
+  }
+  body::before{
+    content:''; position:fixed; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, transparent 40%, var(--bg) 100%);
+    pointer-events:none; z-index:0;
+  }
+  nav, .page-content, footer{ position:relative; z-index:1; }
+
+  nav{
+    position:sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 24px;
+    background:rgba(8,17,28,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav-left{display:flex; align-items:center; gap:18px;}
+  .nav-logo{
+    font-family:var(--serif); font-weight:600; font-size:20px; color:var(--ink);
+    text-decoration:none; display:flex; align-items:center; gap:10px;
+  }
+  .nav-logo img{width:26px; height:26px; object-fit:contain; display:block;}
+  .nav-breadcrumb{font-family:var(--mono); font-size:11px; color:var(--ink-dim);}
+  .nav-links{display:flex; gap:36px;}
+  .nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--ink); border-radius:2px;}
+
+  .page-content{flex:1;}
+
+  .hero{max-width:1160px; margin:0 auto; padding:72px 24px 56px;}
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.14em;
+    color:var(--plum-tint); text-transform:uppercase; margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:var(--serif); font-weight:500;
+    font-size:clamp(32px, 5vw, 52px); line-height:1.1;
+    letter-spacing:-0.01em; color:var(--ink); margin-bottom:6px;
+  }
+  .hero-tagline{
+    font-family:var(--serif); font-weight:400; font-style:italic;
+    font-size:clamp(18px, 3vw, 26px); color:var(--ink-soft); margin-bottom:22px;
+  }
+  .hero-sub{font-size:16px; color:var(--ink-soft); max-width:540px; margin:0 0 36px; line-height:1.75;}
+  .hero-actions{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:48px;}
+  .btn-primary{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 24px; background:var(--plum); color:#241a1e;
+    font-size:13px; font-weight:500; text-decoration:none;
+    border-radius:5px; transition:opacity 0.15s, transform 0.15s;
+  }
+  .btn-primary:hover{opacity:0.88; transform:translateY(-1px);}
+  .btn-ghost{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 24px; background:transparent; color:var(--ink-soft);
+    font-size:13px; text-decoration:none;
+    border:1px solid var(--hairline); border-radius:5px;
+    transition:border-color 0.15s, color 0.15s;
+  }
+  .btn-ghost:hover{border-color:rgba(190,205,220,0.32); color:var(--ink);}
+
+  .hero-shot{
+    border-radius:8px; border:1px solid var(--hairline); overflow:hidden;
+    box-shadow:0 24px 64px rgba(0,0,0,0.4);
+  }
+  .hero-shot img{width:100%; height:auto; display:block;}
+
+  .section-wrap{max-width:1160px; margin:0 auto; padding:64px 24px; border-top:1px solid var(--hairline);}
+  .section-label{font-family:var(--mono); font-size:10px; letter-spacing:0.14em; color:var(--plum-tint); text-transform:uppercase; margin-bottom:12px;}
+  .section-title{font-family:var(--serif); font-weight:500; font-size:26px; letter-spacing:-0.01em; color:var(--ink); margin-bottom:32px;}
+  .section-body{font-size:15px; color:var(--ink-soft); max-width:640px; margin-bottom:8px;}
+
+  .feature-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr);
+    gap:1px; background:var(--hairline); border:1px solid var(--hairline);
+    border-radius:8px; overflow:hidden;
+  }
+  .feature-item{background:var(--surface); padding:22px 24px; transition:background 0.15s;}
+  .feature-item:hover{background:var(--surface2);}
+  .feature-head{display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+  .feature-tag{font-size:16px; color:var(--plum-tint); line-height:1;}
+  .feature-name{font-size:14px; font-weight:500; color:var(--ink);}
+  .feature-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.6;}
+
+  .cta-wrap{text-align:center; padding:64px 24px 80px; max-width:1160px; margin:0 auto; border-top:1px solid var(--hairline);}
+  .cta-wrap .section-title{margin-bottom:12px;}
+  .cta-wrap p{color:var(--ink-soft); margin-bottom:32px; font-size:14px; max-width:480px; margin-left:auto; margin-right:auto;}
+  .cta-wrap .hero-actions{justify-content:center;}
+
+  footer{
+    width:100%; padding:20px 24px; border-top:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  .footer-brand{display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  .footer-brand img{width:20px; height:20px; object-fit:contain;}
+  .footer-brand span{font-family:var(--mono); font-weight:400; color:var(--ink-dim); font-size:12px;}
+  footer .footer-links{display:flex; gap:20px;}
+  footer a.footer-link{color:var(--ink-dim); font-size:12px; text-decoration:none; transition:color 0.15s;}
+  footer a.footer-link:hover{color:var(--ink-soft);}
+  footer .copyright{font-size:12px; color:var(--ink-dim); font-family:var(--mono);}
+
+  @media (max-width:900px){
+    .feature-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    nav{padding:22px 20px;}
+    .nav-breadcrumb{display:none;}
+    .hero, .section-wrap, .cta-wrap{padding-left:20px; padding-right:20px;}
+    .hero{padding-top:48px;}
+    footer{padding:20px;}
+    .nav-toggle{display:flex;}
+    .nav-links{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0; background:var(--bg);
+      border-bottom:1px solid var(--hairline); padding:8px 20px 16px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:12px 0; border-bottom:1px solid var(--hairline);}
+    .nav-links a:last-child{border-bottom:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="nav-logo" href="/"><img src="/assets/img/owlhours-logo.png" alt="OwlHours logo">OwlHours</a>
+    <span class="nav-breadcrumb">/ Room to Bloom</span>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.querySelector('.nav-links').classList.toggle('open'))">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="/worlds/">Worlds</a>
+  </div>
+</nav>
+
+<div class="page-content">
+
+  <div class="hero">
+    <div class="hero-eyebrow">PC · Cozy management · In development</div>
+    <h1>Room to Bloom</h1>
+    <div class="hero-tagline">A quieter kind of decorating game</div>
+    <p class="hero-sub">Turn empty rooms into places worth living in — one considered choice at a time. Room to Bloom is a grown-up take on home decorating: real budgets, real trade-offs, and rooms that actually feel lived-in.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Wishlist on Steam →</a>
+      <a href="/contact/" class="btn-ghost">Follow development</a>
+    </div>
+
+    <div class="hero-shot">
+      <img src="/assets/img/screenshots/room-to-bloom.webp" alt="Room to Bloom gameplay screenshot — a plant-filled apartment room being decorated, with client feedback and a furniture shop panel" loading="lazy">
+    </div>
+  </div>
+
+  <div class="section-wrap" id="about">
+    <div class="section-label">About</div>
+    <div class="section-title">Design for someone else, on a budget</div>
+    <p class="section-body">Every room comes with a client, a budget, and a brief — not just an empty box to fill. You shop a real catalog by category, place pieces by hand, and check in with your client as you go. There's no single correct layout to find; there's a budget to respect and a person to satisfy, and the two don't always agree.</p>
+  </div>
+
+  <div class="section-wrap" id="features">
+    <div class="section-label">What makes it different</div>
+    <div class="section-title">Not casual, not dark — considered</div>
+    <div class="feature-grid">
+
+      <div class="feature-item">
+        <div class="feature-head"><span class="feature-tag">💬</span><span class="feature-name">Real client feedback</span></div>
+        <div class="feature-desc">Your client reacts to what you've actually built — calling out when a room feels uniform, disconnected, or missing a clear mood — instead of scoring you against a hidden checklist.</div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-head"><span class="feature-tag">💰</span><span class="feature-name">A budget that bites</span></div>
+        <div class="feature-desc">Every piece has a real price. A bigger plant or a nicer chair means something else doesn't make the cut — decorating is a series of trade-offs, not an unlimited shopping spree.</div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-head"><span class="feature-tag">🗂️</span><span class="feature-name">A full catalog, by category</span></div>
+        <div class="feature-desc">Seating, lighting, plants, decor, and more, each browsable on its own — so you're choosing between options that make sense together, not scrolling one giant list.</div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-head"><span class="feature-tag">🌿</span><span class="feature-name">Rooms with a point of view</span></div>
+        <div class="feature-desc">Warm and plant-filled, cool and uniform, sparse and quiet — the brief pushes toward a specific feeling, and the room either lands there or it doesn't.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <div class="section-label" style="margin-bottom:12px">Follow along</div>
+    <div class="section-title">Room to Bloom is in development</div>
+    <p>No release date yet. Wishlisting on Steam is the best way to know the moment that changes.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Wishlist on Steam →</a>
+      <a href="/contact/" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a class="footer-brand" href="/">
+    <img src="/assets/img/owlhours-logo.png" alt="OwlHours logo">
+    OwlHours <span>/ room-to-bloom</span>
+  </a>
+  <div class="footer-links">
+    <a class="footer-link" href="/worlds/">← Back</a>
+    <a class="footer-link" href="/contact/">Contact</a>
+  </div>
+  <div class="copyright">© 2026 OwlHours</div>
+</footer>
+
+</body>
+</html>

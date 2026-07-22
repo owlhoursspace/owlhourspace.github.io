@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worlds — OwlHours</title>
+<meta name="description" content="Games about rooms and growth, made by OwlHours. Room to Bloom and future releases.">
+<link rel="canonical" href="https://owlhours.space/worlds/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OwlHours">
+<meta property="og:title" content="Worlds — OwlHours">
+<meta property="og:description" content="Games about rooms and growth, made by OwlHours.">
+<meta property="og:url" content="https://owlhours.space/worlds/">
+<meta property="og:image" content="https://owlhours.space/assets/img/owlhours-logo.png">
+<meta name="twitter:card" content="summary">
+
+<meta name="theme-color" content="#08111C">
+<link rel="icon" type="image/png" href="/assets/img/owlhours-logo.png">
+<link rel="apple-touch-icon" href="/assets/img/owlhours-logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root{
+    --bg: #08111C;
+    --surface: #101B27;
+    --surface2: #16222F;
+    --ink: #ECE9E0;
+    --ink-soft: #A7B0A1;
+    --ink-dim: #6E7A69;
+    --sage: #8FAE93;
+    --sage-tint: #C7DDC8;
+    --amber: #E3A855;
+    --amber-tint: #F2CE97;
+    --plum: #B993A0;
+    --plum-tint: #E3C4CD;
+    --hairline: rgba(190,205,220,0.12);
+    --dot: rgba(190,205,220,0.10);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --serif: 'Fraunces', serif;
+  }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); line-height:1.6;
+    background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+    background-size: 26px 26px; background-attachment: fixed;
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  body::before{
+    content:''; position:fixed; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, transparent 40%, var(--bg) 100%);
+    pointer-events:none; z-index:0;
+  }
+  nav, .wrap, footer{ position:relative; z-index:1; }
+  .wrap{max-width:1160px; margin:0 auto; padding:0 24px; flex:1; width:100%;}
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    width:100%; padding:22px 24px;
+    background:rgba(8,17,28,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .logo{font-family:'Fraunces',serif; font-weight:600; font-size:20px; letter-spacing:0.01em;
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);}
+  .logo-mark{width:26px; height:26px; object-fit:contain; display:block;}
+  .navlinks{display:flex; gap:36px; font-size:14px; color:var(--ink-soft);}
+  .navlinks a{color:inherit; text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px;}
+  .navlinks a:hover, .navlinks a.active{border-color:var(--plum); color:var(--ink);}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--ink); border-radius:2px;}
+
+  .page-hero{padding:64px 0 40px; border-bottom:1px solid var(--hairline); margin-bottom:56px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.08em; color:var(--plum-tint);
+    text-transform:uppercase; margin-bottom:14px;
+  }
+  h1{font-family:var(--serif); font-weight:500; font-size:clamp(32px,4vw,44px); letter-spacing:-0.01em; margin-bottom:14px;}
+  .page-sub{font-size:16px; color:var(--ink-soft); max-width:560px; margin-bottom:24px;}
+
+  .cardgrid{display:grid; grid-template-columns:1fr 1fr; gap:22px; padding-bottom:80px;}
+  .card{
+    background:var(--surface); border:1px solid var(--hairline); border-radius:8px;
+    overflow:hidden; display:block; text-decoration:none; color:inherit;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  a.card:hover{border-color:rgba(190,205,220,0.28); transform:translateY(-2px);}
+
+  .card.card-photo{position:relative; min-height:340px; display:flex; flex-direction:column; justify-content:flex-end;}
+  .card-photo-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+  .card-scrim{
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(8,17,28,0) 0%, rgba(8,17,28,0.35) 45%, rgba(8,17,28,0.88) 72%, rgba(8,17,28,0.97) 100%);
+  }
+  .card-photo .card-body{position:relative; z-index:2;}
+  .card-photo .tag{background:rgba(8,17,28,0.55); backdrop-filter:blur(4px);}
+
+  .card-banner{width:100%; height:150px; display:block; background:var(--surface2);}
+  .card-banner svg{width:100%; height:100%; display:block;}
+  .card-body{padding:22px 26px 22px;}
+  .card .tag{
+    display:inline-block; font-size:11px; font-family:var(--mono);
+    padding:3px 9px; border-radius:2px; margin-bottom:14px; letter-spacing:0.02em;
+    background:rgba(185,147,160,0.16); color:var(--plum-tint);
+  }
+  .card h3{font-family:var(--serif); font-weight:500; font-size:20px; margin:0 0 10px; color:var(--ink);}
+  .card p{font-size:14px; color:var(--ink-soft); margin:0 0 18px;}
+  .card .meta{
+    display:flex; justify-content:space-between; font-size:13px;
+    border-top:1px solid var(--hairline); padding-top:14px; color:var(--ink-soft);
+  }
+  .card.dim{opacity:0.5;}
+
+  footer{
+    width:100%; padding:20px 24px; border-top:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  footer .logo{font-size:14px;}
+  footer .logo-mark{width:20px; height:20px;}
+  footer .domain{font-size:13px; color:var(--ink-dim);}
+
+  @media (max-width:640px){
+    .cardgrid{grid-template-columns:1fr;}
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0; background:var(--bg);
+      border-bottom:1px solid var(--hairline); padding:8px 24px 16px;
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:12px 0; border-bottom:1px solid var(--hairline);}
+    .navlinks a:last-child{border-bottom:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/"><img src="/assets/img/owlhours-logo.png" alt="OwlHours logo" class="logo-mark">OwlHours</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.querySelector('.navlinks').classList.toggle('open'))">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="navlinks">
+    <a href="/tools/">Tools</a>
+    <a href="/worlds/" class="active">Worlds</a>
+    <a href="/about/">About</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-hero">
+    <div class="eyebrow">02 — Worlds</div>
+    <h1>Games about rooms and growth</h1>
+    <p class="page-sub">Small, considered games about the spaces people live in. Not casual, not dark — somewhere quieter in between.</p>
+  </div>
+
+  <div class="cardgrid">
+    <a class="card card-photo" href="/worlds/room-to-bloom/">
+      <img class="card-photo-img" src="/assets/img/screenshots/room-to-bloom.webp" alt="Room to Bloom gameplay screenshot" loading="lazy">
+      <div class="card-scrim"></div>
+      <div class="card-body">
+        <span class="tag">Home &amp; decor</span>
+        <h3>Room to Bloom</h3>
+        <p>A grown-up decorating game about turning empty rooms into places worth living in, one considered choice at a time.</p>
+        <div class="meta"><span>In development</span><span>Wishlist soon</span></div>
+      </div>
+    </a>
+    <div class="card dim">
+      <div class="card-banner">
+        <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="150" fill="#0C131C"/>
+          <path d="M150 210 C 110 130, 20 130, 0 210 C -20 270, 90 290, 150 270 C 210 290, 320 270, 300 210 C 280 130, 190 130, 150 210 Z" fill="none" stroke="#B993A0" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="6 7"/>
+          <circle cx="345" cy="15" r="50" fill="none" stroke="#ECE9E0" stroke-opacity="0.18" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <span class="tag">Untitled</span>
+        <h3>Next project</h3>
+        <p>Early concept work. Not casual, not dark — somewhere quieter in between.</p>
+        <div class="meta"><span>Concept</span><span>—</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a class="logo" href="/"><img src="/assets/img/owlhours-logo.png" alt="OwlHours logo" class="logo-mark">OwlHours</a>
+  <div class="domain">owlhours.space</div>
+</footer>
+
+</body>
+</html>

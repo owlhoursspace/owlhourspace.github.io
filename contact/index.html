@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — OwlHours</title>
+<meta name="description" content="Get in touch with OwlHours — an independent studio building rendering tools for Unity and quiet, considered games.">
+<link rel="canonical" href="https://owlhours.space/contact/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OwlHours">
+<meta property="og:title" content="Contact — OwlHours">
+<meta property="og:description" content="Get in touch with OwlHours.">
+<meta property="og:url" content="https://owlhours.space/contact/">
+<meta property="og:image" content="https://owlhours.space/assets/img/owlhours-logo.png">
+<meta name="twitter:card" content="summary">
+
+<meta name="theme-color" content="#08111C">
+<link rel="icon" type="image/png" href="/assets/img/owlhours-logo.png">
+<link rel="apple-touch-icon" href="/assets/img/owlhours-logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root{
+    --bg: #08111C;
+    --surface: #101B27;
+    --surface2: #16222F;
+    --ink: #ECE9E0;
+    --ink-soft: #A7B0A1;
+    --ink-dim: #6E7A69;
+    --sage: #8FAE93;
+    --sage-tint: #C7DDC8;
+    --amber: #E3A855;
+    --amber-tint: #F2CE97;
+    --plum: #B993A0;
+    --plum-tint: #E3C4CD;
+    --hairline: rgba(190,205,220,0.12);
+    --dot: rgba(190,205,220,0.10);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --serif: 'Fraunces', serif;
+  }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.7;
+    background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+    background-size: 26px 26px; background-attachment: fixed;
+    min-height:100vh; display:flex; flex-direction:column;
+  }
+  body::before{
+    content:''; position:fixed; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, transparent 40%, var(--bg) 100%);
+    pointer-events:none; z-index:0;
+  }
+  nav, .wrap, footer{ position:relative; z-index:1; }
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px; flex:1; width:100%;}
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    width:100%; padding:22px 24px;
+    background:rgba(8,17,28,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .logo{font-family:'Fraunces',serif; font-weight:600; font-size:20px; letter-spacing:0.01em;
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);}
+  .logo-mark{width:26px; height:26px; object-fit:contain; display:block;}
+  .navlinks{display:flex; gap:36px; font-size:14px; color:var(--ink-soft);}
+  .navlinks a{color:inherit; text-decoration:none; border-bottom:1px solid transparent; padding-bottom:2px;}
+  .navlinks a:hover, .navlinks a.active{border-color:var(--amber); color:var(--ink);}
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--ink); border-radius:2px;}
+
+  main{padding:72px 0 100px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.08em; color:var(--amber-tint);
+    text-transform:uppercase; margin-bottom:18px;
+  }
+  h1{font-family:var(--serif); font-weight:500; font-size:clamp(30px,4vw,42px); letter-spacing:-0.01em; margin-bottom:16px;}
+  .page-sub{font-size:16px; color:var(--ink-soft); max-width:520px; margin-bottom:48px;}
+
+  .channel-list{display:flex; flex-direction:column; gap:2px; margin-bottom:40px;}
+  .channel{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:20px 24px; background:var(--surface); border:1px solid var(--hairline);
+    text-decoration:none; color:inherit; transition:background 0.15s, border-color 0.15s;
+  }
+  .channel:first-child{border-radius:8px 8px 0 0;}
+  .channel:last-child{border-radius:0 0 8px 8px;}
+  .channel:only-child{border-radius:8px;}
+  .channel:hover{background:var(--surface2); border-color:rgba(190,205,220,0.24);}
+  .channel-label{font-size:14px; color:var(--ink); font-weight:500;}
+  .channel-sub{font-size:12.5px; color:var(--ink-dim); margin-top:2px;}
+  .channel-arrow{font-size:16px; color:var(--ink-dim); transition:transform 0.15s, color 0.15s;}
+  .channel:hover .channel-arrow{color:var(--amber-tint); transform:translateX(3px);}
+
+  .note{font-size:13px; color:var(--ink-dim);}
+
+  footer{
+    width:100%; padding:20px 24px; border-top:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  footer .logo{font-size:14px;}
+  footer .logo-mark{width:20px; height:20px;}
+  footer .domain{font-size:13px; color:var(--ink-dim);}
+
+  @media (max-width:640px){
+    .nav-toggle{display:flex;}
+    .navlinks{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0; background:var(--bg);
+      border-bottom:1px solid var(--hairline); padding:8px 24px 16px;
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:12px 0; border-bottom:1px solid var(--hairline);}
+    .navlinks a:last-child{border-bottom:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/"><img src="/assets/img/owlhours-logo.png" alt="OwlHours logo" class="logo-mark">OwlHours</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.querySelector('.navlinks').classList.toggle('open'))">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="navlinks">
+    <a href="/tools/">Tools</a>
+    <a href="/worlds/">Worlds</a>
+    <a href="/about/">About</a>
+    <a href="/contact/" class="active">Contact</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <main>
+    <div class="eyebrow">Contact</div>
+    <h1>Get in touch</h1>
+    <p class="page-sub">Questions about URP UI Blur Pro, press inquiries, or just want to follow Room to Bloom's development — here's where to reach OwlHours.</p>
+
+    <div class="channel-list">
+      <a class="channel" href="mailto:hello@owlhours.space">
+        <div>
+          <div class="channel-label">Email</div>
+          <div class="channel-sub">hello@owlhours.space</div>
+        </div>
+        <span class="channel-arrow">→</span>
+      </a>
+      <a class="channel" href="/tools/urp-ui-blur-pro/">
+        <div>
+          <div class="channel-label">URP UI Blur Pro support</div>
+          <div class="channel-sub">Documentation, changelog, and troubleshooting</div>
+        </div>
+        <span class="channel-arrow">→</span>
+      </a>
+      <a class="channel" href="#">
+        <div>
+          <div class="channel-label">Room to Bloom on Steam</div>
+          <div class="channel-sub">Wishlist page — link coming soon</div>
+        </div>
+        <span class="channel-arrow">→</span>
+      </a>
+    </div>
+
+    <p class="note">Social channels will be added here as they launch.</p>
+  </main>
+</div>
+
+<footer>
+  <a class="logo" href="/"><img src="/assets/img/owlhours-logo.png" alt="OwlHours logo" class="logo-mark">OwlHours</a>
+  <div class="domain">owlhours.space</div>
+</footer>
+
+</body>
+</html>
