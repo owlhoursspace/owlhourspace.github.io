@@ -166,6 +166,7 @@
   }
   .card-photo .card-body{position:relative; z-index:2;}
   .track.tools .card.card-photo .tag{background:rgba(8,17,28,0.55); backdrop-filter:blur(4px);}
+  .track.worlds .card.card-photo .tag{background:rgba(8,17,28,0.55); backdrop-filter:blur(4px);}
   /* Card banners use illustrated placeholders for now — replace the <svg> in
      each .card-banner with an <img> (same 400x150-ish aspect) once real
      screenshots or key art are ready. */
@@ -308,22 +309,9 @@
       <div class="track-count">1 in development</div>
     </div>
     <div class="cardgrid">
-      <a class="card" href="/worlds/room-to-bloom/">
-        <div class="card-banner">
-          <svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="rtbbg" x1="0" y1="0" x2="400" y2="150" gradientUnits="userSpaceOnUse">
-                <stop offset="0" stop-color="#17222E"/>
-                <stop offset="1" stop-color="#0E1826"/>
-              </linearGradient>
-            </defs>
-            <rect width="400" height="150" fill="url(#rtbbg)"/>
-            <path d="M150 210 C 110 130, 20 130, 0 210 C -20 270, 90 290, 150 270 C 210 290, 320 270, 300 210 C 280 130, 190 130, 150 210 Z" fill="#B993A0" opacity="0.55"/>
-            <rect x="270" y="-30" width="200" height="200" rx="6" fill="#17222E"/>
-            <rect x="290" y="10" width="90" height="160" rx="4" fill="#8FAE93" opacity="0.3"/>
-            <circle cx="345" cy="15" r="50" fill="#E3A855" opacity="0.45"/>
-          </svg>
-        </div>
+      <a class="card card-photo" href="/worlds/room-to-bloom/">
+        <img class="card-photo-img" src="/assets/img/screenshots/room-to-bloom.webp" alt="Room to Bloom gameplay screenshot" loading="lazy">
+        <div class="card-scrim"></div>
         <div class="card-body">
         <span class="tag">Home &amp; decor</span>
         <h3>Room to Bloom</h3>
