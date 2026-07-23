@@ -767,6 +767,16 @@
           </div>
         </div>
       </div>
+      <div class="item">
+        <div class="item-row">
+          <div class="item-icon warn">&#9888;</div>
+          <div>
+            <strong>Foreground objects can bleed color into a panel's blur</strong>
+            <p style="margin-top:6px; margin-bottom:6px;">Screen-space blur has no concept of depth — each pass blurs neighboring pixels in the captured texture regardless of what the camera considers in front of or behind the panel. An opaque object standing between the camera and a world-space panel (a <code>BlurObject</code>, or a <code>BlurImage</code> on a World Space / Screen Space Camera canvas) can bleed its color into the blur near the panel's edges, even at pixels the object doesn't actually occlude — most noticeable with bright or highly saturated objects. This is inherent to screen-space blur convolution in general, not specific to any one algorithm here.</p>
+            <p style="margin-bottom:0;"><strong>Workaround:</strong> keep strongly emissive or brightly lit objects a little further from panel edges, or lower the blur radius/iterations on that profile if the bleed is noticeable.</p>
+          </div>
+        </div>
+      </div>
       <div class="item" id="layered-blur">
         <div class="item-row">
           <div class="item-icon warn">&#9888;</div>
