@@ -230,8 +230,7 @@
     <div class="aside-name">UI Blur Pro for URP</div>
     <div class="aside-section">
       <div class="aside-label">Versions</div>
-      <a class="aside-link" href="#v1-1-0">v1.1.0 — 2026-07-20</a>
-      <a class="aside-link" href="#v1-0-0">v1.0.0 — 2026-06-25</a>
+      <a class="aside-link" href="#v1-0-0">v1.0.0 — 2026-07-25</a>
     </div>
     <div class="aside-section">
       <div class="aside-label">Pages</div>
@@ -245,45 +244,11 @@
     <h1>Changelog</h1>
     <p class="page-desc">// format follows <a href="https://keepachangelog.com">Keep a Changelog</a></p>
 
-    <!-- v1.1.0 -->
-    <div class="version-block" id="v1-1-0">
-      <div class="version-header">
-        <span class="version-tag">v1.1.0</span>
-        <span class="version-date">2026-07-20</span>
-        <div class="version-divider"></div>
-      </div>
-
-      <div class="change-group">
-        <div class="change-label added">Added</div>
-        <div class="item-list">
-          <div class="item"><strong>Update Mode</strong> — blur no longer has to re-render every single frame. Set it to run at a capped rate, or freeze it entirely for panels that don't need to keep redrawing, like pause menus and modals. Skipped frames cost nothing extra.</div>
-          <div class="item"><strong>Quick-create menu items</strong> — <code>GameObject → UI → Blur Image</code> and <code>GameObject → 3D Object → Blur Object</code> (also available from the Hierarchy <strong>+</strong> button) now create an already-wired panel or 3D object with a default profile assigned, in one click.</div>
-          <div class="item"><strong>Components no longer start blank</strong> — adding a <code>BlurImage</code> or <code>BlurObject</code> via Add Component now automatically assigns a default blur profile.</div>
-          <div class="item"><strong>Performance controls on every inspector</strong> — the Update Mode settings are now visible directly on <code>BlurObject</code> and standalone Blur Profile assets, not only when editing a profile through a <code>BlurImage</code>.</div>
-          <div class="item"><strong>Smarter Update Mode guidance</strong> — the inspector now estimates roughly how many frames your chosen rate actually saves at your target frame rate, making it easier to pick a sensible value.</div>
-        </div>
-      </div>
-
-      <div class="change-group">
-        <div class="change-label changed">Changed</div>
-        <div class="item-list">
-          <div class="item">The algorithm cost indicator now looks and behaves the same everywhere it appears, across every inspector.</div>
-        </div>
-      </div>
-
-      <div class="change-group">
-        <div class="change-label fixed">Fixed</div>
-        <div class="item-list">
-          <div class="item">The active-user count for a <code>BlurObject</code> could occasionally show <strong>0</strong> in the Inspector even when the object was enabled and correctly set up, if the Game view hadn't rendered it recently.</div>
-        </div>
-      </div>
-    </div>
-
     <!-- v1.0.0 -->
     <div class="version-block" id="v1-0-0">
       <div class="version-header">
         <span class="version-tag">v1.0.0</span>
-        <span class="version-date">2026-06-25</span>
+        <span class="version-date">2026-07-25</span>
         <div class="version-divider"></div>
       </div>
 
@@ -293,54 +258,40 @@
         <div class="change-group-title">Blur Algorithms</div>
         <div class="item-list">
           <div class="item">Six blur algorithms: <strong>Dual Kawase</strong>, <strong>Gaussian Separable</strong>, <strong>Tent/Hex</strong>, <strong>Poisson Disk</strong>, <strong>Custom Kawase</strong>, and <strong>Radial</strong> — all built natively on Unity 6's URP RenderGraph API.</div>
-          <div class="item">Blur strength scales automatically with screen resolution, so it looks consistent from 1080p to 4K without manual tuning per platform.</div>
+          <div class="item">Blur strength scales automatically with screen resolution, so it looks consistent and correctly aligned from 1080p to 4K without manual tuning per platform.</div>
         </div>
 
         <div class="change-group-title">Components</div>
         <div class="item-list">
-          <div class="item"><strong>BlurImage</strong> — attach blur to any UI panel, with its own independent appearance settings: tint, brightness, desaturation, vignette, and glass distortion.</div>
+          <div class="item"><strong>BlurImage</strong> — attach blur to any UI panel, with its own independent appearance settings: tint, brightness, desaturation, vignette, and glass distortion. Each panel's appearance stays fully isolated from every other panel, even before a profile is assigned, and previews cleanly while you're setting things up in the Editor.</div>
           <div class="item">Built-in <strong>fade in / fade out</strong> for blur strength — smooth by default, and works correctly even while the game is paused.</div>
-          <div class="item"><strong>BlurObject</strong> — the same blur system for 3D meshes, like windows and glass panels, with realistic light refraction.</div>
+          <div class="item"><strong>BlurObject</strong> — the same blur system for 3D meshes, like windows and glass panels, with realistic light refraction and a dark fringe-free edge even under strong glass distortion.</div>
         </div>
 
         <div class="change-group-title">Runtime Control</div>
         <div class="item-list">
           <div class="item">Blur intensity can be read and changed at runtime (0–1), for fading or scaling blur strength without touching the underlying settings.</div>
-          <div class="item"><strong>Update Mode</strong> lets you choose how often blur re-renders — every frame, a capped rate, or frozen entirely for static panels.</div>
+          <div class="item"><strong>Update Mode</strong> — blur no longer has to re-render every single frame. Set it to run at a capped rate, or freeze it entirely for panels that don't need to keep redrawing, like pause menus and modals. Skipped frames cost nothing extra, and the inspector estimates roughly how many frames your chosen rate actually saves at your target frame rate.</div>
         </div>
 
         <div class="change-group-title">Shared Profiles</div>
         <div class="item-list">
-          <div class="item">Up to <strong>16 independent blur configurations</strong> (Blur Profiles) can run at once, and any number of panels can share one profile at zero extra GPU cost.</div>
+          <div class="item">Up to <strong>16 independent blur configurations</strong> (Blur Profiles) can run at once, and any number of panels can share one profile at zero extra GPU cost — even when several panels share the same algorithm at once. Profile assignments stay correct immediately after entering Play mode.</div>
         </div>
 
         <div class="change-group-title">Editor Tooling</div>
         <div class="item-list">
           <div class="item">A <strong>Setup Wizard</strong> automatically adds the blur feature to your URP renderers on first import, and can be reopened any time from the Tools menu.</div>
+          <div class="item"><strong>Quick-create menu items</strong> — <code>GameObject → UI → Blur Image</code> and <code>GameObject → 3D Object → Blur Object</code> (also available from the Hierarchy <strong>+</strong> button) create an already-wired panel or 3D object with a default profile assigned, in one click. Adding either component directly via Add Component assigns a default profile automatically too, so nothing starts blank.</div>
           <div class="item">Profile management is automatic — profiles stay in sync across your project and clean up after themselves when no longer used.</div>
-          <div class="item">Inspectors for all three components show live previews, an at-a-glance performance cost, and, in Play mode, direct controls for testing.</div>
+          <div class="item">Inspectors for all three components show live previews, an at-a-glance performance cost using the same indicator everywhere, Update Mode controls, and, in Play mode, direct controls for testing.</div>
         </div>
 
         <div class="change-group-title">Included</div>
         <div class="item-list">
-          <div class="item">Ready-to-use materials for both UI and 3D use — no extra setup required.</div>
+          <div class="item">A default blur profile ready to use out of the box — attach a component and it just works, no setup required.</div>
+          <div class="item">Sample normal maps (rock, tile, and bevel patterns) for the glass distortion effect, so you have something to try immediately.</div>
           <div class="item">An interactive demo scene comparing all six blur methods side by side.</div>
-        </div>
-      </div>
-
-      <div class="change-group">
-        <div class="change-label fixed">Fixed</div>
-        <div class="item-list">
-          <div class="item">Blur appearing stretched horizontally in some modes at certain screen resolutions.</div>
-          <div class="item">Blur darkening unexpectedly at high quality settings.</div>
-          <div class="item">Blur panels drifting slightly out of alignment at 4K resolution.</div>
-          <div class="item">A rare case where one panel's blur could appear inside another panel.</div>
-          <div class="item">A render-order conflict when multiple panels used the same blur algorithm.</div>
-          <div class="item">A brief grey flash on panels while editing in the Unity Editor.</div>
-          <div class="item">A panel with no profile assigned could occasionally show another panel's blur.</div>
-          <div class="item">A minor memory leak on 3D blur objects over long play sessions.</div>
-          <div class="item">Blur occasionally showing incorrect content immediately after entering Play mode.</div>
-          <div class="item">A dark fringe appearing around panels using strong glass distortion — the blurred area now automatically extends to cover it.</div>
         </div>
       </div>
     </div>
