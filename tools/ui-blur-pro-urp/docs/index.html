@@ -408,6 +408,7 @@
 
     <h3>Radial</h3>
     <p>Zoom-burst blur: streaks radiate from a focal point, strongest at the edges and vanishing toward the point itself. <code>radialInnerRadius</code> / <code>radialOuterRadius</code> control exactly where that sharp-to-blurred transition happens. This pass draws with a single material, so it has <strong>one focal point per frame</strong> — by default the screen center; enabling <code>radialFocusOnPanelCenter</code> moves that point to the first panel's rect center instead. Best suited to a full-screen effect or a preset used by a single panel. If you need several panels each with their own independent zoom-burst center, give each one its own <code>BlurProfile</code>.</p>
+    <p style="font-size:13px;">The scissor padding needed to cover the outward streak (driven by <code>radialZoomStrength</code>) scales with each panel's own on-screen size rather than the screen size — a small panel keeps a small, cheap scissor rect even at high <code>radialZoomStrength</code> instead of padding out toward full-screen.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Property</th><th>Range</th><th>Description</th></tr></thead>
@@ -444,6 +445,8 @@
       </table>
     </div>
     <p style="font-size:13px;">Re-blur frequency can never exceed your game's actual frame rate, so setting <code>throttleFps</code> higher than needed is harmless. When sharing one profile across panels with different needs, use the highest rate any of them actually requires rather than creating a separate profile just for a different <code>throttleFps</code>.</p>
+    <div class="note"><strong>Sharing a profile between a Throttled/frozen panel and a consumer with unstable visibility costs more than expected, though it isn't visually wrong.</strong> The re-blur clock is tracked per-profile, not per-consumer: whenever a profile has zero active consumers for even one frame, its clock resets so the next reactivation captures a fresh frame instead of stale content. A <code>BlurObject</code> is only "active" while it's actually visible to the camera, which can flicker as the camera or object moves. If such a <code>BlurObject</code> shares a profile with a <code>Throttled</code>/frozen <code>BlurImage</code> panel, the object's visibility flicker keeps resetting the shared clock — the panel keeps re-blurring (correctly, with no visible glitch) far more often than its <code>throttleFps</code> suggests, quietly giving up the performance savings freezing was meant to provide. Give the panel its own dedicated profile if you need it to actually stay at its throttled/frozen cost while sharing a scene with such an object.</div>
+    <div class="note"><strong>A frozen panel that keeps moving or resizing will not track its new position.</strong> Freezing stops capturing new blur data entirely — the panel keeps sampling the single frame captured when it froze. If the panel then moves outside the screen region that was captured, the uncaptured area reads as black. Reserve <code>Throttled</code>/frozen for panels that stay in one place while visible (pause menus, modals) — not ones with slide-in/slide-out or drag animations.</div>
 
     <!-- BLUR IMAGE -->
     <h2 id="blur-image">BlurImage Component</h2>
@@ -870,6 +873,17 @@
             <strong>Setup Wizard shows no renderers</strong>
             <p style="margin-top:4px; margin-bottom:2px;">• Open it manually via <code>Tools → UIBlurPro → Setup Wizard</code>.</p>
             <p style="margin-bottom:0;">• If no renderers appear, create a URP Universal Renderer asset first: <code>Assets → Create → Rendering → URP Universal Renderer</code>.</p>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-row">
+          <div class="item-icon no">&#10005;</div>
+          <div>
+            <strong>Blur works in the Editor but shows a flat, un-blurred panel in a Player Build</strong>
+            <p style="margin-top:4px; margin-bottom:2px;">• This package's Materials are created purely at runtime, so no <code>.mat</code> asset in your project directly references these shaders — Unity's build pipeline strips any shader nothing references, which would otherwise remove them from the build even though everything works fine in the Editor.</p>
+            <p style="margin-bottom:2px;">• The bundled <code>Runtime/Resources/</code> folder contains one dummy Material per shader specifically to prevent this — anything inside a <code>Resources</code> folder is always included in a build. Don't delete or move these Materials out of <code>Resources/</code>.</p>
+            <p style="margin-bottom:0;">• If you still see this after confirming the <code>Resources/</code> folder is intact, do a full clean Player build (delete <code>Library/ShaderCache</code> or the whole <code>Library</code> folder) so shaders recompile from scratch.</p>
           </div>
         </div>
       </div>
