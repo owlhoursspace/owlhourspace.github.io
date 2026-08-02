@@ -1,0 +1,11 @@
+# Visual Studio
+.vs/
+
+# Jekyll build output, if the site is ever built locally
+_site/
+.jekyll-cache/
+.sass-cache/
+
+# OS clutter
+Thumbs.db
+.DS_Store
