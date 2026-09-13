@@ -1,6 +1,9 @@
 # Visual Studio
 .vs/
 
+# Claude Code local dev config (preview server launch config, not site content)
+.claude/
+
 # Jekyll build output, if the site is ever built locally
 _site/
 .jekyll-cache/

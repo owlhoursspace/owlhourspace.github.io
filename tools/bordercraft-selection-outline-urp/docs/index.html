@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation - Bordercraft - Selection Outline for URP - OwlHours</title>
+<meta name="description" content="Full documentation for Bordercraft - Selection Outline for URP: setup, channels, outline styles, profile reference, runtime API, limitations, and troubleshooting.">
+<link rel="canonical" href="https://owlhours.space/tools/bordercraft-selection-outline-urp/docs/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OwlHours">
+<meta property="og:title" content="Documentation — Bordercraft - Selection Outline for URP">
+<meta property="og:description" content="Full documentation for Bordercraft - Selection Outline for URP: setup, channels, outline styles, profile reference, runtime API, and troubleshooting.">
+<meta property="og:url" content="https://owlhours.space/tools/bordercraft-selection-outline-urp/docs/">
+<meta property="og:image" content="https://owlhours.space/assets/img/owlhours-logo.png">
+<meta name="twitter:card" content="summary">
+
+<meta name="theme-color" content="#08111C">
+<link rel="icon" type="image/png" href="/assets/img/owlhours-logo.png">
+<link rel="apple-touch-icon" href="/assets/img/owlhours-logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root{
+    --bg: #08111C;
+    --surface: #101B27;
+    --surface2: #16222F;
+    --ink: #ECE9E0;
+    --ink-soft: #A7B0A1;
+    --ink-dim: #6E7A69;
+    --sage: #8FAE93;
+    --sage-tint: #C7DDC8;
+    --amber: #E3A855;
+    --amber-tint: #F2CE97;
+    --plum: #B993A0;
+    --plum-tint: #E3C4CD;
+    --ok: #C7DDC8;
+    --bad: #E0908A;
+    --hairline: rgba(190,205,220,0.12);
+    --dot: rgba(190,205,220,0.10);
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --serif: 'Fraunces', serif;
+  }
+
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh; display:flex; flex-direction:column;
+    background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
+    background-size: 26px 26px;
+    background-attachment: fixed;
+  }
+  body::before{
+    content:''; position:fixed; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, transparent 40%, var(--bg) 100%);
+    pointer-events:none; z-index:0;
+  }
+  nav, .page-layout, footer{ position:relative; z-index:1; }
+
+  /* ── Nav ── */
+  nav{
+    position:sticky; top:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 24px;
+    background:rgba(8,17,28,0.85); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav-left{display:flex; align-items:center; gap:18px;}
+  .nav-logo{
+    font-family:var(--serif); font-weight:600; font-size:20px; color:var(--ink);
+    text-decoration:none; display:flex; align-items:center; gap:10px;
+  }
+  .nav-logo img{width:26px; height:26px; object-fit:contain; display:block;}
+  .nav-breadcrumb{font-family:var(--mono); font-size:11px; color:var(--ink-dim);}
+  .nav-breadcrumb a{color:var(--ink-soft); text-decoration:none;}
+  .nav-breadcrumb a:hover{color:var(--ink);}
+  .nav-links{display:flex; gap:36px;}
+  .nav-links a{font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color 0.15s;}
+  .nav-links a:hover, .nav-links a.active{color:var(--ink);}
+
+  .nav-toggle{
+    display:none; flex-direction:column; justify-content:center; gap:5px;
+    width:32px; height:32px; background:none; border:none; cursor:pointer; padding:0;
+  }
+  .nav-toggle span{display:block; width:100%; height:2px; background:var(--ink); border-radius:2px;}
+
+  /* ── Layout ── */
+  .page-layout{
+    flex:1; display:flex; max-width:1160px; margin:0 auto; width:100%;
+  }
+
+  /* ── Sidebar ── */
+  aside{
+    width:210px; flex-shrink:0; padding:48px 0 80px 0; margin-left:24px;
+    position:sticky; top:70px; align-self:flex-start;
+    height:calc(100vh - 70px); overflow-y:auto;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  aside::-webkit-scrollbar{display:none;}
+  .aside-name{
+    font-family:var(--mono); font-size:11px; font-weight:500; color:var(--ink-dim);
+    letter-spacing:0.08em; text-transform:uppercase; margin-bottom:20px; padding-left:14px;
+  }
+  .aside-section{margin-bottom:22px;}
+  .aside-label{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.1em; color:var(--ink-dim);
+    text-transform:uppercase; margin-bottom:8px; padding-left:14px;
+  }
+  .aside-link{
+    display:block; font-size:13px; color:var(--ink-soft); text-decoration:none;
+    padding:4px 14px; border-left:2px solid transparent;
+    transition:color 0.15s, border-color 0.15s, background-color 0.15s;
+  }
+  .aside-link:hover{color:var(--ink); background-color:rgba(255,255,255,0.02);}
+  .aside-link.active{
+    color:var(--ink); border-left-color:var(--sage); background-color:rgba(143,174,147,0.08);
+    font-weight:500;
+  }
+
+  /* ── Main ── */
+  main{flex:1; min-width:0; padding:48px 24px 100px;}
+  h1{
+    font-family:var(--serif); font-weight:500; font-size:30px; letter-spacing:-0.01em;
+    color:var(--ink); margin-bottom:8px;
+  }
+  .page-desc{font-family:var(--mono); font-size:12px; color:var(--ink-dim); margin-bottom:48px;}
+
+  h2{
+    font-family:var(--mono); font-size:10px; font-weight:500; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--sage-tint); margin:48px 0 12px; padding-top:8px;
+  }
+  h2:first-of-type{margin-top:0;}
+  h3{font-family:var(--serif); font-size:17px; font-weight:500; color:var(--ink); margin:22px 0 8px;}
+  h4{font-size:13px; font-weight:500; color:var(--ink); margin:20px 0 8px;}
+  p{font-size:14px; color:var(--ink-soft); margin-bottom:12px;}
+  a{color:var(--sage-tint); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  code{
+    font-family:var(--mono); font-size:12px; background:var(--surface2); color:var(--amber-tint);
+    padding:1px 5px; border-radius:3px; border:1px solid var(--hairline);
+  }
+
+  /* ── Code block ── */
+  .code-block{background:var(--surface); border:1px solid var(--hairline); border-radius:8px; overflow:hidden; margin:14px 0 24px;}
+  .code-header{display:flex; align-items:center; gap:8px; padding:10px 16px; border-bottom:1px solid var(--hairline); background:var(--surface2);}
+  .code-dot{width:9px; height:9px; border-radius:50%;}
+  .code-filename{font-family:var(--mono); font-size:11px; color:var(--ink-dim); margin-left:4px;}
+  pre{padding:22px 24px; overflow-x:auto; font-family:var(--mono); font-size:12.5px; line-height:1.85; color:var(--ink-soft); background:transparent; margin:0;}
+  pre code{background:none; border:none; padding:0; color:inherit;}
+  .kw{color:#7BA6D9;} .ct{color:var(--plum-tint);} .cl{color:var(--sage-tint);}
+  .fn{color:var(--amber-tint);} .st{color:#D9A97B;} .cm{color:#7BAE7F; font-style:italic;}
+  .nm{color:var(--ink);} .nu{color:#B7D9A0;}
+
+  /* ── Table ── */
+  .table-wrap{overflow-x:auto; margin:10px 0 24px; border:1px solid var(--hairline); border-radius:8px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-dim); text-align:left; padding:10px 14px; background:var(--surface2);
+    border-bottom:1px solid var(--hairline);
+  }
+  td{padding:10px 14px; border-bottom:1px solid var(--hairline); color:var(--ink-soft); vertical-align:top; background:var(--surface);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--surface2);}
+  td:first-child{color:var(--ink); font-weight:500;}
+  .cost{letter-spacing:1px;}
+  .cost .on{color:var(--amber-tint);}
+  .cost .off{color:var(--hairline);}
+
+  /* ── Step list ── */
+  .steps{display:flex; flex-direction:column; gap:2px; margin:10px 0 24px;}
+  .step{
+    display:flex; gap:16px; align-items:flex-start; padding:13px 16px;
+    background:var(--surface); border:1px solid var(--hairline);
+    font-size:13px; color:var(--ink-soft); transition:background 0.1s;
+  }
+  .step:first-child{border-radius:6px 6px 0 0;}
+  .step:last-child{border-radius:0 0 6px 6px;}
+  .step:hover{background:var(--surface2);}
+  .step-num{flex-shrink:0; font-family:var(--mono); font-size:11px; color:var(--sage-tint); margin-top:2px; min-width:18px;}
+
+  /* ── Item list ── */
+  .item-list{display:flex; flex-direction:column; gap:2px; margin:10px 0 24px;}
+  .item{padding:11px 16px; background:var(--surface); border:1px solid var(--hairline); font-size:13px; color:var(--ink-soft); line-height:1.6; transition:background 0.1s;}
+  .item:first-child{border-radius:6px 6px 0 0;}
+  .item:last-child{border-radius:0 0 6px 6px;}
+  .item:only-child{border-radius:6px;}
+  .item:hover{background:var(--surface2);}
+  .item strong{color:var(--ink);}
+  .item-row{display:flex; gap:14px; align-items:flex-start;}
+  .item-icon{flex-shrink:0; margin-top:1px;}
+  .item-icon.yes{color:var(--ok);}
+  .item-icon.no{color:var(--bad);}
+  .item-icon.warn{color:var(--amber-tint);}
+
+  /* ── Callouts ── */
+  .note{padding:13px 16px; background:rgba(143,174,147,0.08); border:1px solid rgba(143,174,147,0.25); border-radius:6px; font-size:13px; color:var(--ink-soft); margin:10px 0 20px;}
+  .note strong{color:var(--sage-tint);}
+  .warn{padding:13px 16px; background:rgba(227,168,85,0.07); border:1px solid rgba(227,168,85,0.22); border-radius:6px; font-size:13px; color:var(--ink-soft); margin:10px 0 20px;}
+  .warn strong{color:var(--amber-tint);}
+
+  /* ── Footer ── */
+  footer{
+    width:100%; padding:20px 24px; border-top:1px solid var(--hairline);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+  .footer-brand{display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:14px; color:var(--ink-soft); text-decoration:none;}
+  .footer-brand img{width:20px; height:20px; object-fit:contain;}
+  .footer-brand span{font-family:var(--mono); font-weight:400; color:var(--ink-dim); font-size:12px;}
+  footer .footer-links{display:flex; gap:20px;}
+  footer a.footer-link{color:var(--ink-dim); font-size:12px; text-decoration:none; transition:color 0.15s;}
+  footer a.footer-link:hover{color:var(--ink-soft);}
+  footer .copyright{font-size:12px; color:var(--ink-dim); font-family:var(--mono);}
+
+  @media (max-width:960px){
+    nav{padding:22px 20px;}
+    .nav-breadcrumb{display:none;}
+    .page-layout{flex-direction:column;}
+    aside{display:none;}
+    main{padding:40px 20px 80px;}
+    footer{padding:20px;}
+  }
+
+  @media (max-width:640px){
+    .nav-toggle{display:flex;}
+    .nav-links{
+      display:none; position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; gap:0; background:var(--bg);
+      border-bottom:1px solid var(--hairline); padding:8px 20px 16px;
+    }
+    .nav-links.open{display:flex;}
+    .nav-links a{padding:12px 0; border-bottom:1px solid var(--hairline);}
+    .nav-links a:last-child{border-bottom:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="nav-logo" href="/"><img src="/assets/img/owlhours-logo.png" alt="OwlHours logo">OwlHours</a>
+    <span class="nav-breadcrumb">/ <a href="/tools/bordercraft-selection-outline-urp/">Bordercraft - Selection Outline for URP</a> / docs</span>
+  </div>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="this.setAttribute('aria-expanded', document.querySelector('.nav-links').classList.toggle('open'))">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links">
+    <a href="./" class="active">Docs</a>
+    <a href="../changelog/">Changelog</a>
+    <a href="../license/">License</a>
+  </div>
+</nav>
+
+<div class="page-layout">
+  <aside>
+    <div class="aside-name">Bordercraft - Selection Outline</div>
+    <div class="aside-section">
+      <div class="aside-label">Getting Started</div>
+      <a class="aside-link" href="#how-it-works">How It Works</a>
+      <a class="aside-link" href="#requirements">Requirements</a>
+      <a class="aside-link" href="#quick-start">Quick Start</a>
+    </div>
+    <div class="aside-section">
+      <div class="aside-label">Reference</div>
+      <a class="aside-link" href="#channels">Channels</a>
+      <a class="aside-link" href="#outline-styles">Outline Styles</a>
+      <a class="aside-link" href="#additive-opaque">Additive vs Opaque</a>
+      <a class="aside-link" href="#outline-profile">OutlineProfile</a>
+      <a class="aside-link" href="#outline-target">OutlineTarget</a>
+    </div>
+    <div class="aside-section">
+      <div class="aside-label">Runtime</div>
+      <a class="aside-link" href="#runtime-api">Runtime API</a>
+      <a class="aside-link" href="#runtime-patterns">Common Patterns</a>
+    </div>
+    <div class="aside-section">
+      <div class="aside-label">Help</div>
+      <a class="aside-link" href="#limitations">Known Limitations</a>
+      <a class="aside-link" href="#rendering-layer">Rendering Layer Usage</a>
+      <a class="aside-link" href="#troubleshooting">Troubleshooting</a>
+    </div>
+  </aside>
+
+  <main>
+    <h1>Documentation</h1>
+    <p class="page-desc">// Bordercraft - Selection Outline for URP · v1.0.0 · Unity 6 / URP 17+</p>
+
+    <!-- HOW IT WORKS -->
+    <h2 id="how-it-works">How It Works</h2>
+    <p>Bordercraft hooks into URP's RenderGraph pipeline and draws a screen-space outline — a soft blurred glow, or a cheap hard edge line — around whichever GameObjects are currently selected. Selection is driven by flipping a reserved bit on the object's own renderers, so there's no scene setup and no per-project Layer configuration.</p>
+    <p><strong>The outline only runs for a channel while at least one GameObject is currently selected on it. A channel with nothing selected costs nothing.</strong> This is the one thing most screen-space outline effects get wrong — they run their full pass every frame the moment the Renderer Feature is enabled, whether or not anything is actually outlined.</p>
+
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><div><strong>Scene renders normally</strong><p style="margin:4px 0 0; font-size:13px;">Geometry, skybox, and transparents render through URP as usual.</p></div></div>
+      <div class="step"><span class="step-num">02</span><div><strong>A GameObject is selected</strong><p style="margin:4px 0 0; font-size:13px;"><code>Outliner.SetSelected(go, true)</code> flips a reserved bit on every renderer under that GameObject.</p></div></div>
+      <div class="step"><span class="step-num">03</span><div><strong>Silhouette pass</strong><p style="margin:4px 0 0; font-size:13px;">The Outline Renderer Feature draws only the marked renderers into a small coverage mask, scissored to their on-screen bounding rect — not full-screen.</p></div></div>
+      <div class="step"><span class="step-num">04</span><div><strong>Composite pass</strong><p style="margin:4px 0 0; font-size:13px;">Soft style blurs and subtracts to extract a ring; Hard style skips straight to a cheap two-ring edge tap. The result is tinted and blended onto the camera image.</p></div></div>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <h2 id="requirements">Requirements</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Requirement</th><th>Version</th></tr></thead>
+        <tbody>
+          <tr><td>Unity</td><td>6000.0 or later</td></tr>
+          <tr><td>Universal Render Pipeline</td><td>17.0.0 or later</td></tr>
+          <tr><td>RenderGraph</td><td>Enabled in Project Settings → Graphics → URP Global Settings</td></tr>
+          <tr><td>Render path</td><td>3D Universal Renderer — URP 2D Renderer not tested, not officially supported</td></tr>
+          <tr><td>Platforms</td><td>PC, Mobile — VR/XR not tested, not officially supported</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- QUICK START -->
+    <h2 id="quick-start">Quick Start</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><span>Open the <strong>Setup Wizard</strong> via <code>Tools → Bordercraft → Setup Wizard</code>. It also opens automatically on first import.</span></div>
+      <div class="step"><span class="step-num">02</span><span>Tick the URP Renderer assets you want to add the feature to, then click <strong>Add Outline Feature</strong>. A default profile is created and assigned to Channel 0 automatically.</span></div>
+      <div class="step"><span class="step-num">03</span><span>From code: <code>Outliner.SetSelected(myGameObject, true);</code> — no scene setup, no pre-placed component required.</span></div>
+      <div class="step"><span class="step-num">04</span><span>Tune the look by editing the <code>OutlineProfile</code> asset assigned to Channel 0 — style, color, radius, wave, etc. take effect immediately.</span></div>
+    </div>
+    <p>You can also create profiles directly via <code>Assets → Create → Bordercraft → Outline Profile</code>, or by clicking <strong>+ Add Channel</strong> on the Outline Renderer Feature's Inspector to wire up a second channel with its own new profile in one click.</p>
+
+    <!-- CHANNELS -->
+    <h2 id="channels">Channels</h2>
+    <p>The Renderer Feature's Inspector shows one row per configured channel, <strong>Channel 0</strong> onward, plus a <strong>+ Add Channel</strong> button (up to 4 total). By default only Channel 0 is filled in, so <code>Outliner.SetSelected(go, true)</code> — which defaults to channel 0 — is all most projects need.</p>
+    <p>To show a second, independently-styled outline at the same time (e.g. a different color for enemies vs interactables), click <strong>+ Add Channel</strong>, then select those objects with <code>Outliner.SetSelected(go, true, 1)</code>. Each channel is fully independent — its own profile, its own zero-cost-when-idle gating, its own scissor rect — so an empty or unused slot costs nothing even while others are active.</p>
+    <div class="note"><strong>Live status:</strong> in Play mode, each filled-in row shows a status dot (green = at least one object currently selected on that channel, grey = idle) with the active count next to it.</div>
+    <div class="warn"><strong>Missing profile warning:</strong> if an object is selected on a channel with no profile assigned, a warning is logged once (not every frame) naming the channel, instead of silently rendering nothing.</div>
+
+    <!-- OUTLINE STYLES -->
+    <h2 id="outline-styles">Outline Styles</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Style</th><th>Cost</th><th>Best For</th></tr></thead>
+        <tbody>
+          <tr><td>Soft (blurred glow)</td><td class="cost"><span class="on">●●</span><span class="off">○○○</span></td><td>A glowing halo — the default, reads well over any background</td></tr>
+          <tr><td>Hard (cheap edge line)</td><td class="cost"><span class="on">●</span><span class="off">○○○○</span></td><td>A thin, crisp selection outline at the lowest possible cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Soft</strong> grows the silhouette (Dilate, only when Gap or Wave is non-zero), blurs it (separable Gaussian, 2 passes), then subtracts the original from the blurred result to get a ring. <strong>Hard</strong> skips the blur entirely and samples two rings of the raw silhouette per pixel (near/far taps) instead — cheaper, but the line can't use the same wave-driven thickness variation trick as Soft.</p>
+
+    <!-- ADDITIVE VS OPAQUE -->
+    <h2 id="additive-opaque">Additive vs Opaque</h2>
+    <p><code>OutlineProfile.opaque</code> controls how the outline's color blends onto the scene.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>opaque</th><th>Blend</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Off (default)</td><td>Additive</td><td>The outline color is <strong>added</strong> as light on top of whatever is behind it — always shows the background through it, however solid the color looks. Supports HDR bloom.</td></tr>
+          <tr><td>On</td><td>Opaque (premultiplied alpha)</td><td>The outline <strong>replaces</strong> the background proportionally to Color alpha — fully opaque at full alpha, like a solid painted line.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>These are not the same operation scaled differently.</strong> Raising Color alpha on Additive can never reproduce what Opaque looks like, except by coincidence over a pure black background. Over a bright or colorful background, Additive keeps the full background brightness and adds light on top of it; Opaque instead blends toward the outline color, replacing background brightness rather than adding to it, and never oversaturates. Pick Additive for a neon/glow look that should read even over bright scenes; pick Opaque for a flat, solid-color line.</div>
+
+    <!-- OUTLINE PROFILE -->
+    <h2 id="outline-profile">OutlineProfile</h2>
+    <p>An <code>OutlineProfile</code> is a serializable asset describing an outline's look — style, color, radius, wave, etc. It contains no rendering plumbing; that lives entirely in the Renderer Feature.</p>
+    <p><strong>Ways to create a profile:</strong> <code>Assets → Create → Bordercraft → Outline Profile</code>, click <strong>+ Add Channel</strong> on the Outline Renderer Feature's Inspector, or let the Setup Wizard create and assign one automatically.</p>
+
+    <h3>Parameters</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Type</th><th>Range</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>style</code></td><td>OutlineStyle</td><td>—</td><td><code>Soft</code> or <code>Hard</code> — see Outline Styles above</td></tr>
+          <tr><td><code>color</code></td><td>Color (HDR)</td><td>—</td><td>Outline tint; alpha controls strength (Additive) or opacity (Opaque) — there's no separate intensity knob</td></tr>
+          <tr><td><code>opaque</code></td><td>bool</td><td>—</td><td>Additive glow (off) or solid opaque line (on) — see Additive vs Opaque above</td></tr>
+          <tr><td><code>radius</code></td><td>int</td><td>1–32</td><td>Soft: blur kernel radius in texels. Hard: edge tap distance in texels. Calibrated at 1080p, auto-scales at other resolutions</td></tr>
+          <tr><td><code>gap</code></td><td>int</td><td>0–32</td><td>Pushes the outline out from the edge by this many texels instead of sitting flush against it (also 1080p-calibrated)</td></tr>
+          <tr><td><code>waveAmplitude</code></td><td>float</td><td>0–16</td><td>Animates the outline's distance from the edge in a wave traveling around the object's screen-space center. 0 = static outline</td></tr>
+          <tr><td><code>waveFrequency</code></td><td>float</td><td>0.5–16</td><td>How many wave bumps fit around the object's perimeter</td></tr>
+          <tr><td><code>waveSpeed</code></td><td>float</td><td>—</td><td>How fast the wave travels around the perimeter, in cycles per second</td></tr>
+          <tr><td><code>waveUpdateRate</code></td><td>float</td><td>0–30</td><td>Quantizes the wave's motion into this many discrete steps per second instead of flowing continuously, for a stop-motion look. 0 = smooth</td></tr>
+          <tr><td><code>thicknessVariation</code></td><td>float</td><td>0–16</td><td><strong>Hard style only.</strong> A second, phase-shifted perturbation on the outer edge only, so the line's thickness varies unevenly along the outline instead of staying constant. No effect in Soft style</td></tr>
+          <tr><td><code>xray</code></td><td>bool</td><td>—</td><td>On: outline visible through geometry in front of the target. Off: occluded normally (more expensive — binds the camera's real depth buffer)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- OUTLINE TARGET -->
+    <h2 id="outline-target">OutlineTarget</h2>
+    <p><code>OutlineTarget</code> marks a GameObject (and its child renderers) to be drawn with the outline. Most projects never touch this directly — <code>Outliner.SetSelected</code> adds and toggles it automatically. For objects you want pre-wired in the Editor instead, add it directly and just toggle its <code>enabled</code> checkbox — this works both in Play mode and in the Editor outside Play mode.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>channel</code></td><td>int 0–3</td><td>Which channel this target shows on</td></tr>
+          <tr><td><code>renderers</code></td><td>Renderer[]</td><td>Renderers to outline. Leave empty to auto-collect from this GameObject and its children on enable</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Call <code>outlineTarget.Refresh()</code> after adding or removing renderers on the object at runtime, so the outline picks up the change instead of continuing to use a stale cached list.</p>
+
+    <!-- RUNTIME API -->
+    <h2 id="runtime-api">Runtime API</h2>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#febc2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-filename">SelectionManager.cs</span>
+      </div>
+<pre><span class="kw">using</span> <span class="cl">Bordercraft</span>;
+
+<span class="cm">// Select on channel 0 (the default most projects use):</span>
+<span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">myGameObject</span>, <span class="kw">true</span>);
+<span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">myGameObject</span>, <span class="kw">false</span>);
+
+<span class="cm">// Select on a specific channel (0-3), routing to a different profile/look:</span>
+<span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">myGameObject</span>, <span class="kw">true</span>, <span class="nu">1</span>);</pre>
+    </div>
+    <p>Calling <code>SetSelected</code> is safe on any GameObject, including one that was never previously selected — no scene setup or pre-placed component required.</p>
+
+    <!-- COMMON PATTERNS -->
+    <h3 id="runtime-patterns">Common Patterns</h3>
+
+    <h4>Swap channels for different object types</h4>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#febc2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-filename">SelectionManager.cs</span>
+      </div>
+<pre><span class="kw">void</span> <span class="fn">Highlight</span>(<span class="cl">GameObject</span> <span class="nm">go</span>, <span class="kw">bool</span> <span class="nm">isEnemy</span>)
+{
+    <span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">go</span>, <span class="kw">true</span>, <span class="nm">isEnemy</span> ? <span class="nu">1</span> : <span class="nu">0</span>);
+}</pre>
+    </div>
+
+    <h4>Clear a previous selection before selecting a new one</h4>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#febc2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-filename">DragState.cs</span>
+      </div>
+<pre><span class="kw">if</span> (<span class="nm">previousSelection</span> != <span class="kw">null</span>)
+    <span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">previousSelection</span>, <span class="kw">false</span>);
+
+<span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">newSelection</span>, <span class="kw">true</span>);
+<span class="nm">previousSelection</span> = <span class="nm">newSelection</span>;</pre>
+    </div>
+
+    <!-- LIMITATIONS -->
+    <h2 id="limitations">Known Limitations</h2>
+
+    <h3>Scissor rect is one shared box per channel, not per object</h3>
+    <p>Every currently-outlined object on a channel contributes to a single scissor rect spanning the union of all of them, not a separate shaded region per object. Fine for one-object-at-a-time selection; several outlined objects far apart on screen on the same channel will scissor a rect spanning all of them, growing the shaded (and therefore shaded draw cost) area accordingly.</p>
+
+    <h3>Wave animation freezes in the Editor outside Play mode</h3>
+    <p>The wave's motion is keyed off game time, which does not advance outside Play mode — a profile with Wave Amplitude set will render a single static frame of the wave in the Editor until you press Play, rather than animating.</p>
+
+    <h3>2D Renderer not supported</h3>
+    <p>The render pass assumes the standard 3D forward/deferred pipeline (mesh silhouette draws, camera depth access for occlusion mode) and has not been tested against URP's 2D Renderer.</p>
+
+    <!-- RENDERING LAYER USAGE -->
+    <h2 id="rendering-layer">Rendering Layer Usage</h2>
+    <p><strong>This package permanently reserves the top 4 bits (28-31) of every GameObject's Rendering Layer Mask</strong> — not however many of the 4 channels you actually configure, all 4 are reserved the moment the package is present in the project, since they're a fixed constant in code rather than something that scales with use.</p>
+    <div class="warn"><strong>Check before importing:</strong> they're taken from the top of the mask specifically because URP projects typically only use bits 0-7 for Light Layers, so the odds of a collision are low — but if your project already uses custom Rendering Layers up near bits 28-31 for something else (lighting, decals, or your own filtering), check <code>Project Settings → Tags and Layers → Rendering Layers</code> before importing, or those layers will conflict with this package's.</div>
+
+    <!-- TROUBLESHOOTING -->
+    <h2 id="troubleshooting">Troubleshooting</h2>
+
+    <h4>Nothing shows when I call Outliner.SetSelected</h4>
+    <div class="item-list">
+      <div class="item">Confirm the Outline Renderer Feature is added and enabled on the active URP Renderer asset (use the Setup Wizard to check — <code>Tools → Bordercraft → Setup Wizard</code>).</div>
+      <div class="item">Confirm a Profile is assigned to the channel you're selecting on — check the Console for a "no Profile is assigned to that channel" warning.</div>
+      <div class="item">If using a Wave setting, remember it won't animate outside Play mode (see Known Limitations).</div>
+    </div>
+
+    <h4>The outline is see-through even with a solid color</h4>
+    <div class="item-list">
+      <div class="item">That's Additive mode (the default) doing exactly what it's designed to do — it adds color as light on top of the background rather than replacing it. Turn on <strong>Opaque</strong> on the profile for a solid line. See Additive vs Opaque above.</div>
+    </div>
+
+    <h4>Setup Wizard shows no renderers</h4>
+    <div class="item-list">
+      <div class="item">Open it manually via <code>Tools → Bordercraft → Setup Wizard</code>.</div>
+      <div class="item">If no renderers appear, create a URP Universal Renderer asset first: <code>Assets → Create → Rendering → URP Universal Renderer</code>.</div>
+    </div>
+
+    <h4>Outline works in the Editor but is missing in a Player Build</h4>
+    <div class="item-list">
+      <div class="item">This package's Materials are created purely at runtime, so no <code>.mat</code> asset in your project directly references these shaders. Unity's build pipeline strips any shader nothing references, which would otherwise remove them from the build even though everything works fine in the Editor.</div>
+      <div class="item">The bundled <code>Runtime/Resources/</code> folder contains one dummy Material per shader specifically to prevent this — anything inside a Resources folder is always included in a build. Don't delete or move these Materials out of <code>Resources/</code>.</div>
+      <div class="item">If you still see this after confirming the <code>Resources/</code> folder is intact, do a full clean Player build (delete <code>Library/ShaderCache</code> or the whole <code>Library</code> folder) so shaders recompile from scratch, since a stale build can reuse an older stripped shader binary.</div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <a class="footer-brand" href="/">
+    <img src="/assets/img/owlhours-logo.png" alt="OwlHours logo">
+    OwlHours <span>/ bordercraft-selection-outline-urp / docs</span>
+  </a>
+  <div class="footer-links">
+    <a class="footer-link" href="../">← Back</a>
+    <a class="footer-link" href="../changelog/">Changelog</a>
+    <a class="footer-link" href="../license/">License</a>
+  </div>
+  <div class="copyright">© 2026 OwlHours</div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const asideLinks = document.querySelectorAll('.aside-link[href^="#"]');
+    const targets = [];
+    asideLinks.forEach(link => {
+      const targetEl = document.querySelector(link.getAttribute('href'));
+      if (targetEl) targets.push({ link, targetEl });
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const matched = targets.find(t => t.targetEl === entry.target);
+          if (matched) {
+            asideLinks.forEach(l => l.classList.remove('active'));
+            matched.link.classList.add('active');
+          }
+        }
+      });
+    }, { root: null, rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+
+    targets.forEach(t => observer.observe(t.targetEl));
+
+    asideLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetEl = document.querySelector(link.getAttribute('href'));
+        if (targetEl) {
+          window.scrollTo({ top: targetEl.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
+          asideLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          history.pushState(null, null, link.getAttribute('href'));
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
