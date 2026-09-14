@@ -397,7 +397,7 @@
           <tr><td><code>radius</code></td><td>int</td><td>1–32</td><td>Soft: blur kernel radius in texels. Hard: edge tap distance in texels. Calibrated at 1080p, auto-scales at other resolutions</td></tr>
           <tr><td><code>gap</code></td><td>int</td><td>0–32</td><td>Pushes the outline out from the edge by this many texels instead of sitting flush against it (also 1080p-calibrated)</td></tr>
           <tr><td><code>waveAmplitude</code></td><td>float</td><td>0–16</td><td>Animates the outline's distance from the edge in a wave traveling around the object's screen-space center. 0 = static outline</td></tr>
-          <tr><td><code>waveFrequency</code></td><td>float</td><td>0.5–16</td><td>How many wave bumps fit around the object's perimeter</td></tr>
+          <tr><td><code>waveFrequency</code></td><td>float</td><td>0–16</td><td>How many wave bumps fit around the object's perimeter. <code>0</code> drops the position term entirely and the whole outline breathes in and out together instead. Whole numbers tile the perimeter exactly; a fractional value leaves a seam where the wave wraps — see Known Limitations</td></tr>
           <tr><td><code>waveSpeed</code></td><td>float</td><td>—</td><td>How fast the wave travels around the perimeter, in cycles per second</td></tr>
           <tr><td><code>waveUpdateRate</code></td><td>float</td><td>0–30</td><td>Quantizes the wave's motion into this many discrete steps per second instead of flowing continuously, for a stop-motion look. 0 = smooth</td></tr>
           <tr><td><code>thicknessVariation</code></td><td>float</td><td>0–16</td><td><strong>Hard style only.</strong> A second, phase-shifted perturbation on the outer edge only, so the line's thickness varies unevenly along the outline instead of staying constant. No effect in Soft style</td></tr>
@@ -477,6 +477,10 @@
 
     <h3>Scissor rect is one shared box per channel, not per object</h3>
     <p>Every currently-outlined object on a channel contributes to a single scissor rect spanning the union of all of them, not a separate shaded region per object. Fine for one-object-at-a-time selection; several outlined objects far apart on screen on the same channel will scissor a rect spanning all of them, growing the shaded (and therefore shaded draw cost) area accordingly.</p>
+
+    <h3>Wave frequency and the wrap seam</h3>
+    <p>The wave's phase is the angle around the object multiplied by Wave Frequency, and that angle wraps around somewhere along the outline — directly to the left of the object's screen-space centre. The two sides of the wrap only line up when Wave Frequency is a whole number, so a fractional value leaves a step there: a place where the wave jumps rather than flows.</p>
+    <p>It is worst at a half-step (0.5, 4.5) where the two sides are in full opposition, and it scales with Wave Amplitude — easy to miss at a small amplitude, and a visible notch cut out of the outline at a large one. 0, 1, 2, 3… are all seam-free, 0 included. The default of 4 is deliberately a whole number for this reason.</p>
 
     <h3>Wave is designed for one outlined object at a time per channel</h3>
     <p>The wave's phase is the angle around a single screen-space centre, and that centre is the middle of the same union rect the scissor uses — so with two objects far apart on one channel it lands in the empty space between them rather than inside either. Seen from there each object spans only a narrow range of angles, so the sine barely changes across it and the wave stops travelling around the perimeter: the whole outline pulses in and out together instead, with the two objects at an arbitrary relative phase.</p>
