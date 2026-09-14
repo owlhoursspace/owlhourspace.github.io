@@ -272,6 +272,7 @@
       <a class="aside-link" href="#channels">Channels</a>
       <a class="aside-link" href="#outline-styles">Outline Styles</a>
       <a class="aside-link" href="#additive-opaque">Additive vs Opaque</a>
+      <a class="aside-link" href="#visibility">Visibility &amp; Occlusion</a>
       <a class="aside-link" href="#outline-profile">OutlineProfile</a>
       <a class="aside-link" href="#outline-target">OutlineTarget</a>
     </div>
@@ -363,6 +364,23 @@
     </div>
     <div class="note"><strong>These are not the same operation scaled differently.</strong> Raising Color alpha on Additive can never reproduce what Opaque looks like, except by coincidence over a pure black background. Over a bright or colorful background, Additive keeps the full background brightness and adds light on top of it; Opaque instead blends toward the outline color, replacing background brightness rather than adding to it, and never oversaturates. Pick Additive for a neon/glow look that should read even over bright scenes; pick Opaque for a flat, solid-color line.</div>
 
+    <!-- VISIBILITY -->
+    <h2 id="visibility">Visibility &amp; Occlusion</h2>
+    <p><code>OutlineProfile.visibility</code> controls how the outline resolves against the depth of the rest of the scene. It is decided <strong>per pixel</strong>, not per object — a half-covered target is outlined on the covered half only.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>visibility</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Always (default)</td><td>The outline shows through anything in front of the target — an X-ray highlight. The cheapest of the three: no depth buffer is bound at all.</td></tr>
+          <tr><td>Where Visible</td><td>The outline is occluded normally, like any other object in the scene.</td></tr>
+          <tr><td>Where Hidden</td><td>The outline appears <strong>only</strong> where something else is covering the target — it fades in as the target moves behind an occluder and vanishes once it is back in the clear.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Where Hidden</strong> is the "where did my character go" effect — the classic outline that tracks a character walking behind a wall. It needs no bookkeeping on your side to switch on and off: an unoccluded target simply produces an empty mask, so nothing is drawn.</p>
+    <div class="note"><strong>Self-overlap does not trigger it.</strong> A plant whose leaves cover each other, or a character holding an arm in front of its torso, stays clean — the mask is built by filling the whole silhouette and then erasing wherever the target is the frontmost surface on screen, so only geometry belonging to something <em>else</em> can leave a mark. One caveat to expect instead: the line traces the boundary of the hidden region, so it also runs along the occluder's own edge where that edge cuts across the target.</div>
+    <p><strong>Cost.</strong> Both <em>Where</em> modes bind the camera's real depth buffer, which forces the silhouette buffer to full camera resolution with matching MSAA; <code>Always</code> skips that entirely. <em>Where Hidden</em> additionally draws the target's renderers a second time (the erase) inside the same render pass — no extra pass and no extra render target. Note that none of this makes a channel free when nothing happens to be occluded: zero-cost-when-idle is about having <strong>no active target</strong>, and an active-but-unoccluded target still runs the pass chain and produces an empty result.</p>
+
     <!-- OUTLINE PROFILE -->
     <h2 id="outline-profile">OutlineProfile</h2>
     <p>An <code>OutlineProfile</code> is a serializable asset describing an outline's look — style, color, radius, wave, etc. It contains no rendering plumbing; that lives entirely in the Renderer Feature.</p>
@@ -383,7 +401,7 @@
           <tr><td><code>waveSpeed</code></td><td>float</td><td>—</td><td>How fast the wave travels around the perimeter, in cycles per second</td></tr>
           <tr><td><code>waveUpdateRate</code></td><td>float</td><td>0–30</td><td>Quantizes the wave's motion into this many discrete steps per second instead of flowing continuously, for a stop-motion look. 0 = smooth</td></tr>
           <tr><td><code>thicknessVariation</code></td><td>float</td><td>0–16</td><td><strong>Hard style only.</strong> A second, phase-shifted perturbation on the outer edge only, so the line's thickness varies unevenly along the outline instead of staying constant. No effect in Soft style</td></tr>
-          <tr><td><code>xray</code></td><td>bool</td><td>—</td><td>On: outline visible through geometry in front of the target. Off: occluded normally (more expensive — binds the camera's real depth buffer)</td></tr>
+          <tr><td><code>visibility</code></td><td>OutlineVisibility</td><td>—</td><td>Which parts of the target get outlined — <code>Always</code>, <code>WhereVisible</code> or <code>WhereHidden</code>. See Visibility &amp; Occlusion above</td></tr>
         </tbody>
       </table>
     </div>
