@@ -137,6 +137,25 @@
     border-radius:8px; overflow:hidden;
   }
   .shot-card svg{width:100%; height:auto; display:block;}
+  /* The pulse diagram is the one effect on this page that a still frame cannot show,
+     so it animates. Double-thump timing to match what the effect actually looks like. */
+  /* scale()/opacity rather than animating the SVG r attribute - Safari does not support
+     SVG geometry properties as animatable CSS, transforms it handles everywhere. */
+  .pulse-ring{
+    transform-box:fill-box; transform-origin:center;
+    animation:pulse-ring 1.6s ease-out infinite;
+  }
+  @keyframes pulse-ring{
+    0%   {transform:scale(.88); opacity:.30;}
+    7%   {transform:scale(1.16); opacity:.95;}
+    17%  {transform:scale(.93); opacity:.45;}
+    25%  {transform:scale(1.08); opacity:.75;}
+    42%  {transform:scale(.88); opacity:.30;}
+    100% {transform:scale(.88); opacity:.30;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pulse-ring{animation:none; transform:scale(1); opacity:.8;}
+  }
   .shot-caption{padding:12px 16px; font-size:12.5px; color:var(--ink-soft);}
   .shot-caption strong{color:var(--ink); font-weight:500;}
 
@@ -403,6 +422,35 @@
           <text x="297" y="236" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#C7DDC8">scissor rect</text>
         </svg>
         <div class="shot-caption"><strong>Scissor Culling</strong> — every pass is clipped to the outlined object's on-screen rect, not the full frame.</div>
+      </div>
+
+      <div class="shot-card">
+        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="260" fill="#0C131C"/>
+          <defs>
+            <clipPath id="hidden-side"><rect x="200" y="0" width="100" height="260"/></clipPath>
+            <clipPath id="clear-side"><rect x="300" y="0" width="100" height="260"/></clipPath>
+          </defs>
+          <circle cx="100" cy="118" r="40" fill="#22303B"/>
+          <rect x="200" y="24" width="100" height="186" fill="#16222F"/>
+          <circle cx="300" cy="118" r="40" fill="#22303B" clip-path="url(#clear-side)"/>
+          <circle cx="300" cy="118" r="40" fill="none" stroke="#E3A855" stroke-width="3" clip-path="url(#hidden-side)"/>
+          <line x1="300" y1="78" x2="300" y2="158" stroke="#E3A855" stroke-width="3"/>
+          <text x="100" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#6E7A69">in the clear — nothing drawn</text>
+          <text x="300" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#F2CE97">covered — outlined</text>
+        </svg>
+        <div class="shot-caption"><strong>Show Only When Hidden</strong> — the outline fades in on whatever part of the object something else is covering, and vanishes again once it's in the clear. No bookkeeping on your side.</div>
+      </div>
+
+      <div class="shot-card">
+        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="260" fill="#0C131C"/>
+          <defs><filter id="soft-blur5" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+          <circle class="pulse-ring" cx="200" cy="118" r="44" fill="none" stroke="#8FAE93" stroke-width="12" filter="url(#soft-blur5)"/>
+          <circle cx="200" cy="118" r="34" fill="#101B27"/>
+          <text x="200" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#C7DDC8">waveFrequency = 0</text>
+        </svg>
+        <div class="shot-caption"><strong>Pulse</strong> — drop the wave's frequency to zero and the bumps stop travelling around the edge; the whole outline breathes in and out together instead, like a heartbeat.</div>
       </div>
 
     </div>
