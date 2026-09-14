@@ -478,6 +478,10 @@
     <h3>Scissor rect is one shared box per channel, not per object</h3>
     <p>Every currently-outlined object on a channel contributes to a single scissor rect spanning the union of all of them, not a separate shaded region per object. Fine for one-object-at-a-time selection; several outlined objects far apart on screen on the same channel will scissor a rect spanning all of them, growing the shaded (and therefore shaded draw cost) area accordingly.</p>
 
+    <h3>Wave is designed for one outlined object at a time per channel</h3>
+    <p>The wave's phase is the angle around a single screen-space centre, and that centre is the middle of the same union rect the scissor uses — so with two objects far apart on one channel it lands in the empty space between them rather than inside either. Seen from there each object spans only a narrow range of angles, so the sine barely changes across it and the wave stops travelling around the perimeter: the whole outline pulses in and out together instead, with the two objects at an arbitrary relative phase.</p>
+    <p>It still animates and still looks deliberate, so this is a degraded effect rather than a broken one — but it is not the effect the parameter describes. A channel outlining one object at a time, which is the usual case and what the four channels exist to make easy, is unaffected. Leave Wave Amplitude at 0 on a channel that routinely holds several scattered targets.</p>
+
     <h3>Wave animation freezes in the Editor outside Play mode</h3>
     <p>The wave's motion is keyed off game time, which does not advance outside Play mode — a profile with Wave Amplitude set will render a single static frame of the wave in the Editor until you press Play, rather than animating.</p>
 
