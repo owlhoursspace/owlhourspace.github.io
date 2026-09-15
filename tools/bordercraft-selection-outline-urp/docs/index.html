@@ -266,6 +266,7 @@
       <a class="aside-link" href="#how-it-works">How It Works</a>
       <a class="aside-link" href="#requirements">Requirements</a>
       <a class="aside-link" href="#quick-start">Quick Start</a>
+      <a class="aside-link" href="#demo-scene">Demo Scene</a>
     </div>
     <div class="aside-section">
       <div class="aside-label">Reference</div>
@@ -329,6 +330,17 @@
       <div class="step"><span class="step-num">04</span><span>Tune the look by editing the <code>OutlineProfile</code> asset assigned to Channel 0 — style, color, radius, wave, etc. take effect immediately.</span></div>
     </div>
     <p>You can also create profiles directly via <code>Assets → Create → Bordercraft → Outline Profile</code>, or by clicking <strong>+ Add Channel</strong> on the Outline Renderer Feature's Inspector to wire up a second channel with its own new profile in one click.</p>
+
+    <!-- DEMO SCENE -->
+    <h2 id="demo-scene">Demo Scene</h2>
+    <p><code>Samples/Demo.unity</code> walks through every feature with an on-screen button panel. The <code>Samples</code> folder is optional — nothing else in the package depends on it, so it is safe to delete.</p>
+    <div class="steps">
+      <div class="step"><span class="step-num">01</span><span>Run the <strong>Setup Wizard</strong> if you haven't already, so the Outline Renderer Feature is on your URP Renderer.</span></div>
+      <div class="step"><span class="step-num">02</span><span>On the Outline Renderer Feature, put <strong>Demo Channel 0–3</strong> (in <code>Samples/Profiles</code>) into Channel 0–3. The buttons edit these assets directly, so a channel using any other profile won't change.</span></div>
+      <div class="step"><span class="step-num">03</span><span>Open <code>Samples/Demo.unity</code> and press Play.</span></div>
+    </div>
+    <div class="note"><strong>HDR glow:</strong> the Enemy button uses an HDR color, which only glows when HDR is on in your URP Asset and Post Processing is on for the camera. The scene already includes a Global Volume with Bloom, and the panel warns about either setting if it's missing.</div>
+    <p>The buttons write into the demo profile assets, so the last look you picked stays in those assets after you exit Play. Press <strong>Reset</strong> to return to the default Soft look.</p>
 
     <!-- CHANNELS -->
     <h2 id="channels">Channels</h2>
@@ -398,7 +410,7 @@
           <tr><td><code>gap</code></td><td>int</td><td>0–32</td><td>Pushes the outline out from the edge by this many texels instead of sitting flush against it (also 1080p-calibrated)</td></tr>
           <tr><td><code>waveAmplitude</code></td><td>float</td><td>0–16</td><td>Animates the outline's distance from the edge in a wave traveling around the object's screen-space center. 0 = static outline</td></tr>
           <tr><td><code>waveFrequency</code></td><td>float</td><td>0–16</td><td>How many wave bumps fit around the object's perimeter. <code>0</code> drops the position term entirely and the whole outline breathes in and out together instead. Whole numbers tile the perimeter exactly; a fractional value leaves a seam where the wave wraps — see Known Limitations</td></tr>
-          <tr><td><code>waveSpeed</code></td><td>float</td><td>—</td><td>How fast the wave travels around the perimeter, in cycles per second</td></tr>
+          <tr><td><code>waveSpeed</code></td><td>float</td><td>—</td><td>How fast the wave travels around the perimeter, in radians per second (about 6.28 is one full cycle per second). Safe to change at runtime — the wave speeds up or slows down smoothly</td></tr>
           <tr><td><code>waveUpdateRate</code></td><td>float</td><td>0–30</td><td>Quantizes the wave's motion into this many discrete steps per second instead of flowing continuously, for a stop-motion look. 0 = smooth</td></tr>
           <tr><td><code>thicknessVariation</code></td><td>float</td><td>0–16</td><td><strong>Hard style only.</strong> A second, phase-shifted perturbation on the outer edge only, so the line's thickness varies unevenly along the outline instead of staying constant. No effect in Soft style</td></tr>
           <tr><td><code>visibility</code></td><td>OutlineVisibility</td><td>—</td><td>Which parts of the target get outlined — <code>Always</code>, <code>WhereVisible</code> or <code>WhereHidden</code>. See Visibility &amp; Occlusion above</td></tr>
@@ -486,8 +498,8 @@
     <p>The wave's phase is the angle around a single screen-space centre, and that centre is the middle of the same union rect the scissor uses — so with two objects far apart on one channel it lands in the empty space between them rather than inside either. Seen from there each object spans only a narrow range of angles, so the sine barely changes across it and the wave stops travelling around the perimeter: the whole outline pulses in and out together instead, with the two objects at an arbitrary relative phase.</p>
     <p>It still animates and still looks deliberate, so this is a degraded effect rather than a broken one — but it is not the effect the parameter describes. A channel outlining one object at a time, which is the usual case and what the four channels exist to make easy, is unaffected. Leave Wave Amplitude at 0 on a channel that routinely holds several scattered targets.</p>
 
-    <h3>Wave animation freezes in the Editor outside Play mode</h3>
-    <p>The wave's motion is keyed off game time, which does not advance outside Play mode — a profile with Wave Amplitude set will render a single static frame of the wave in the Editor until you press Play, rather than animating.</p>
+    <h3>Wave animation only advances in the Editor while the view repaints</h3>
+    <p>Outside Play mode Unity only redraws a view when something happens in it, so a profile with Wave Amplitude set moves while you move the mouse over the Game view and holds still when you stop. In Play mode it animates continuously.</p>
 
     <h3>2D Renderer not supported</h3>
     <p>The render pass assumes the standard 3D forward/deferred pipeline (mesh silhouette draws, camera depth access for occlusion mode) and has not been tested against URP's 2D Renderer.</p>
@@ -504,7 +516,7 @@
     <div class="item-list">
       <div class="item">Confirm the Outline Renderer Feature is added and enabled on the active URP Renderer asset (use the Setup Wizard to check — <code>Tools → Bordercraft → Setup Wizard</code>).</div>
       <div class="item">Confirm a Profile is assigned to the channel you're selecting on — check the Console for a "no Profile is assigned to that channel" warning.</div>
-      <div class="item">If using a Wave setting, remember it won't animate outside Play mode (see Known Limitations).</div>
+      <div class="item">If using a Wave setting outside Play mode, it only moves while the view repaints (see Known Limitations).</div>
     </div>
 
     <h4>The outline is see-through even with a solid color</h4>
