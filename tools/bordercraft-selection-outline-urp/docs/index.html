@@ -475,13 +475,105 @@
         <div class="code-dot" style="background:#ff5f57"></div>
         <div class="code-dot" style="background:#febc2e"></div>
         <div class="code-dot" style="background:#28c840"></div>
-        <span class="code-filename">DragState.cs</span>
+        <span class="code-filename">Selection.cs</span>
       </div>
 <pre><span class="kw">if</span> (<span class="nm">previousSelection</span> != <span class="kw">null</span>)
     <span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">previousSelection</span>, <span class="kw">false</span>);
 
 <span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">newSelection</span>, <span class="kw">true</span>);
 <span class="nm">previousSelection</span> = <span class="nm">newSelection</span>;</pre>
+    </div>
+
+    <h4>Change a profile at runtime</h4>
+    <p>Every profile field can be changed while the game runs and takes effect on the next frame. Two things to keep in mind:</p>
+    <div class="item-list">
+      <div class="item"><strong>A profile is a shared asset, not a per-object setting.</strong> Changing it changes every object on every channel and Renderer that uses that profile. To give objects different looks, put them on different channels.</div>
+      <div class="item"><strong>In the Editor, edits made in Play mode stay in the asset after you exit Play.</strong> Player builds are unaffected, but put the original values back so your profile doesn't drift while you work — both examples below do.</div>
+    </div>
+
+    <p>Speed the outline up as the player gets close:</p>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#febc2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-filename">DangerPulse.cs</span>
+      </div>
+<pre><span class="kw">using</span> <span class="cl">Bordercraft</span>;
+<span class="kw">using</span> <span class="cl">UnityEngine</span>;
+
+<span class="kw">public class</span> <span class="cl">DangerPulse</span> : <span class="cl">MonoBehaviour</span>
+{
+    [<span class="cl">SerializeField</span>] <span class="kw">private</span> <span class="cl">OutlineProfile</span> <span class="nm">profile</span>;   <span class="cm">// the asset assigned to this object's channel</span>
+    [<span class="cl">SerializeField</span>] <span class="kw">private</span> <span class="cl">Transform</span> <span class="nm">player</span>;
+    [<span class="cl">SerializeField</span>] <span class="kw">private float</span> <span class="nm">dangerDistance</span> = <span class="nu">5f</span>;
+
+    <span class="kw">private float</span> <span class="nm">restSpeed</span>;
+
+    <span class="kw">private void</span> <span class="fn">OnEnable</span>() =&gt; <span class="nm">restSpeed</span> = <span class="nm">profile</span>.<span class="nm">waveSpeed</span>;
+
+    <span class="kw">private void</span> <span class="fn">Update</span>()
+    {
+        <span class="kw">float</span> <span class="nm">closeness</span> = <span class="nu">1f</span> - <span class="cl">Mathf</span>.<span class="fn">Clamp01</span>(<span class="cl">Vector3</span>.<span class="fn">Distance</span>(<span class="nm">transform</span>.<span class="nm">position</span>, <span class="nm">player</span>.<span class="nm">position</span>) / <span class="nm">dangerDistance</span>);
+        <span class="nm">profile</span>.<span class="nm">waveSpeed</span> = <span class="cl">Mathf</span>.<span class="fn">Lerp</span>(<span class="nm">restSpeed</span>, <span class="nm">restSpeed</span> * <span class="nu">3f</span>, <span class="nm">closeness</span>);
+    }
+
+    <span class="cm">// Edits made in Play mode stay in the asset in the Editor, so put the value back.</span>
+    <span class="kw">private void</span> <span class="fn">OnDisable</span>() =&gt; <span class="nm">profile</span>.<span class="nm">waveSpeed</span> = <span class="nm">restSpeed</span>;
+}</pre>
+    </div>
+
+    <p>Switch a channel to a completely different look, and back:</p>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#ff5f57"></div>
+        <div class="code-dot" style="background:#febc2e"></div>
+        <div class="code-dot" style="background:#28c840"></div>
+        <span class="code-filename">AlertLook.cs</span>
+      </div>
+<pre><span class="kw">using</span> <span class="cl">Bordercraft</span>;
+<span class="kw">using</span> <span class="cl">UnityEngine</span>;
+
+<span class="kw">public class</span> <span class="cl">AlertLook</span> : <span class="cl">MonoBehaviour</span>
+{
+    [<span class="cl">SerializeField</span>] <span class="kw">private</span> <span class="cl">OutlineProfile</span> <span class="nm">profile</span>;   <span class="cm">// the asset assigned to this object's channel</span>
+
+    <span class="kw">private</span> <span class="cl">OutlineProfile</span> <span class="nm">original</span>;
+
+    <span class="cm">// An in-memory copy of the starting look, used to restore it.</span>
+    <span class="kw">private void</span> <span class="fn">OnEnable</span>() =&gt; <span class="nm">original</span> = <span class="fn">Instantiate</span>(<span class="nm">profile</span>);
+
+    <span class="kw">public void</span> <span class="fn">SetAlert</span>(<span class="kw">bool</span> <span class="nm">alert</span>)
+    {
+        <span class="kw">if</span> (<span class="nm">alert</span>) <span class="fn">ApplyAlertLook</span>();
+        <span class="kw">else</span> <span class="fn">Restore</span>();
+    }
+
+    <span class="cm">// Write every field, so nothing from the previous look is left behind.</span>
+    <span class="kw">private void</span> <span class="fn">ApplyAlertLook</span>()
+    {
+        <span class="nm">profile</span>.<span class="nm">style</span> = <span class="cl">OutlineStyle</span>.<span class="nm">Hard</span>;
+        <span class="nm">profile</span>.<span class="nm">color</span> = <span class="kw">new</span> <span class="cl">Color</span>(<span class="nu">3f</span>, <span class="nu">0.15f</span>, <span class="nu">0.1f</span>, <span class="nu">1f</span>);   <span class="cm">// above 1 glows when Bloom is on</span>
+        <span class="nm">profile</span>.<span class="nm">opaque</span> = <span class="kw">false</span>;
+        <span class="nm">profile</span>.<span class="nm">radius</span> = <span class="nu">3</span>;
+        <span class="nm">profile</span>.<span class="nm">gap</span> = <span class="nu">2</span>;
+        <span class="nm">profile</span>.<span class="nm">waveAmplitude</span> = <span class="nu">5f</span>;
+        <span class="nm">profile</span>.<span class="nm">waveFrequency</span> = <span class="nu">10f</span>;
+        <span class="nm">profile</span>.<span class="nm">waveSpeed</span> = <span class="nu">10f</span>;
+        <span class="nm">profile</span>.<span class="nm">waveUpdateRate</span> = <span class="nu">4f</span>;
+        <span class="nm">profile</span>.<span class="nm">thicknessVariation</span> = <span class="nu">1f</span>;
+        <span class="nm">profile</span>.<span class="nm">visibility</span> = <span class="cl">OutlineVisibility</span>.<span class="nm">Always</span>;
+    }
+
+    <span class="cm">// Copies every serialized field back from the saved copy.</span>
+    <span class="kw">private void</span> <span class="fn">Restore</span>() =&gt; <span class="cl">JsonUtility</span>.<span class="fn">FromJsonOverwrite</span>(<span class="cl">JsonUtility</span>.<span class="fn">ToJson</span>(<span class="nm">original</span>), <span class="nm">profile</span>);
+
+    <span class="kw">private void</span> <span class="fn">OnDisable</span>()
+    {
+        <span class="fn">Restore</span>();
+        <span class="fn">Destroy</span>(<span class="nm">original</span>);
+    }
+}</pre>
     </div>
 
     <!-- LIMITATIONS -->
