@@ -302,7 +302,7 @@
     <div class="steps">
       <div class="step"><span class="step-num">01</span><div><strong>Scene renders normally</strong><p style="margin:4px 0 0; font-size:13px;">Geometry, skybox, and transparents render through URP as usual.</p></div></div>
       <div class="step"><span class="step-num">02</span><div><strong>A GameObject is selected</strong><p style="margin:4px 0 0; font-size:13px;"><code>Outliner.SetSelected(go, true)</code> flips a reserved bit on every renderer under that GameObject.</p></div></div>
-      <div class="step"><span class="step-num">03</span><div><strong>Silhouette pass</strong><p style="margin:4px 0 0; font-size:13px;">The Outline Renderer Feature draws only the marked renderers into a small coverage mask, scissored to their on-screen bounding rect — not full-screen.</p></div></div>
+      <div class="step"><span class="step-num">03</span><div><strong>Silhouette pass</strong><p style="margin:4px 0 0; font-size:13px;">The Outline Renderer Feature draws only the marked renderers into a coverage mask, touching only their own pixels. Every pass after this one is scissored to their on-screen bounding rect — not full-screen.</p></div></div>
       <div class="step"><span class="step-num">04</span><div><strong>Composite pass</strong><p style="margin:4px 0 0; font-size:13px;">Soft style blurs and subtracts to extract a ring; Hard style skips straight to a cheap two-ring edge tap. The result is tinted and blended onto the camera image.</p></div></div>
     </div>
 
@@ -408,11 +408,11 @@
           <tr><td><code>opaque</code></td><td>bool</td><td>—</td><td>Additive glow (off) or solid opaque line (on) — see Additive vs Opaque above</td></tr>
           <tr><td><code>radius</code></td><td>int</td><td>1–32</td><td>Soft: blur kernel radius in texels. Hard: edge tap distance in texels. Calibrated at 1080p, auto-scales at other resolutions</td></tr>
           <tr><td><code>gap</code></td><td>int</td><td>0–32</td><td>Pushes the outline out from the edge by this many texels instead of sitting flush against it (also 1080p-calibrated)</td></tr>
-          <tr><td><code>waveAmplitude</code></td><td>float</td><td>0–16</td><td>Animates the outline's distance from the edge in a wave traveling around the object's screen-space center. 0 = static outline</td></tr>
+          <tr><td><code>waveAmplitude</code></td><td>float</td><td>0–16</td><td>Animates the outline's distance from the edge in a wave traveling around the object's screen-space center. 0 = static outline. Applies as set while the object is at least half the screen tall and shrinks with it below that, so a distant object's wave keeps its shape instead of turning into spikes</td></tr>
           <tr><td><code>waveFrequency</code></td><td>float</td><td>0–16</td><td>How many wave bumps fit around the object's perimeter. <code>0</code> drops the position term entirely and the whole outline breathes in and out together instead. Whole numbers tile the perimeter exactly; a fractional value leaves a seam where the wave wraps — see Known Limitations</td></tr>
           <tr><td><code>waveSpeed</code></td><td>float</td><td>—</td><td>How fast the wave travels around the perimeter, in radians per second (about 6.28 is one full cycle per second). Safe to change at runtime — the wave speeds up or slows down smoothly</td></tr>
           <tr><td><code>waveUpdateRate</code></td><td>float</td><td>0–30</td><td>Quantizes the wave's motion into this many discrete steps per second instead of flowing continuously, for a stop-motion look. 0 = smooth</td></tr>
-          <tr><td><code>thicknessVariation</code></td><td>float</td><td>0–16</td><td><strong>Hard style only.</strong> A second, phase-shifted perturbation on the outer edge only, so the line's thickness varies unevenly along the outline instead of staying constant. No effect in Soft style</td></tr>
+          <tr><td><code>thicknessVariation</code></td><td>float</td><td>0–16</td><td><strong>Hard style only.</strong> A second, phase-shifted perturbation on the outer edge only, so the line's thickness varies unevenly along the outline instead of staying constant. Shrinks with distant objects the same way as <code>waveAmplitude</code>. No effect in Soft style</td></tr>
           <tr><td><code>visibility</code></td><td>OutlineVisibility</td><td>—</td><td>Which parts of the target get outlined — <code>Always</code>, <code>WhereVisible</code> or <code>WhereHidden</code>. See Visibility &amp; Occlusion above</td></tr>
         </tbody>
       </table>
@@ -430,6 +430,7 @@
         </tbody>
       </table>
     </div>
+    <p>If any of those renderers is a Skinned Mesh Renderer with <strong>Update When Offscreen</strong> off, the Inspector shows a warning with a button that turns it on. See <a href="#troubleshooting">Troubleshooting</a> for why it matters.</p>
     <p>Call <code>outlineTarget.Refresh()</code> after adding or removing renderers on the object at runtime, so the outline picks up the change instead of continuing to use a stale cached list.</p>
 
     <!-- RUNTIME API -->
@@ -590,6 +591,9 @@
     <p>The wave's phase is the angle around a single screen-space centre, and that centre is the middle of the same union rect the scissor uses — so with two objects far apart on one channel it lands in the empty space between them rather than inside either. Seen from there each object spans only a narrow range of angles, so the sine barely changes across it and the wave stops travelling around the perimeter: the whole outline pulses in and out together instead, with the two objects at an arbitrary relative phase.</p>
     <p>It still animates and still looks deliberate, so this is a degraded effect rather than a broken one — but it is not the effect the parameter describes. A channel outlining one object at a time, which is the usual case and what the four channels exist to make easy, is unaffected. Leave Wave Amplitude at 0 on a channel that routinely holds several scattered targets.</p>
 
+    <h3>The wave shrinks by one amount per channel</h3>
+    <p>How much the wave shrinks for a distant object is measured from the largest outlined object on the channel. Several small, distant objects shrink correctly however far apart they are, but a distant object sharing a channel with a close one keeps the close one's full wave. Give distant objects their own channel if that matters.</p>
+
     <h3>Wave animation only advances in the Editor while the view repaints</h3>
     <p>Outside Play mode Unity only redraws a view when something happens in it, so a profile with Wave Amplitude set moves while you move the mouse over the Game view and holds still when you stop. In Play mode it animates continuously.</p>
 
@@ -614,6 +618,13 @@
     <h4>The outline is see-through even with a solid color</h4>
     <div class="item-list">
       <div class="item">That's Additive mode (the default) doing exactly what it's designed to do — it adds color as light on top of the background rather than replacing it. Turn on <strong>Opaque</strong> on the profile for a solid line. See Additive vs Opaque above.</div>
+    </div>
+
+    <h4>Part of an animated character's outline is missing</h4>
+    <div class="item-list">
+      <div class="item">The outline is only drawn inside the character's bounds, the box Unity also uses to decide whether the character is on screen at all. A Skinned Mesh Renderer's bounds don't follow the animation by default, so a pose that leans or reaches outside them loses its outline there. Characters imported from VRoid (VRM) often have bounds much smaller than their poses.</div>
+      <div class="item">Select the <code>OutlineTarget</code> and press <strong>Turn On Update When Offscreen</strong> in its Inspector, or tick <strong>Update When Offscreen</strong> on each Skinned Mesh Renderer yourself. This costs a little CPU per character each frame.</div>
+      <div class="item">If you'd rather not pay that, set the Skinned Mesh Renderer's <strong>Bounds</strong> large enough to cover every pose instead.</div>
     </div>
 
     <h4>Setup Wizard shows no renderers</h4>

@@ -260,12 +260,13 @@
           <div class="item"><strong>Soft</strong> — a blurred glow that grows and re-blurs the object's silhouette, for a halo that reads well over any background.</div>
           <div class="item"><strong>Hard</strong> — a cheap, crisp edge line with no blur pass at all, for the lowest possible cost.</div>
           <div class="item">Radius, gap, and thickness variation all scale automatically with screen resolution, so the outline reads as the same relative size at 1080p and 4K without manual tuning.</div>
+          <div class="item">The line keeps the same width on screen at any distance, but the wave shrinks with the object as it moves away, so a distant enemy's outline keeps its shape instead of turning into spikes. No setting to learn — it just happens.</div>
         </div>
 
         <div class="change-group-title">Zero-Cost Architecture</div>
         <div class="item-list">
           <div class="item">The outline costs nothing the moment nothing is selected — no texture allocated, no render pass added — instead of running every frame regardless like most screen-space outline effects.</div>
-          <div class="item">Every pass is scissored to the selected object's on-screen area, not the full screen — cost scales with how much of the screen the outline actually covers, not with render resolution.</div>
+          <div class="item">The outline's passes are scissored to the selected object's on-screen area, not the full screen — cost scales with how much of the screen the outline actually covers, not with render resolution.</div>
           <div class="item">Selection is driven by a reserved rendering layer rather than your project's own Layer setup, so it drops into any project with no per-project configuration.</div>
         </div>
 
@@ -296,6 +297,7 @@
           <div class="item">The Renderer Feature's Inspector shows one row per channel with a live status dot in Play mode, and a one-click <strong>+ Add Channel</strong> button that creates and assigns a new profile automatically.</div>
           <div class="item">The Profile inspector shows exactly which Renderer assets and channels currently use it, with a button to jump straight to each one.</div>
           <div class="item">Selection can also be pre-wired directly in the Editor — add an Outline Target component and just toggle it — and previews correctly in the Scene view without needing to press Play.</div>
+          <div class="item">The Outline Target inspector warns when an animated character's bounds may not follow its animation, which would cut part of its outline off, and fixes it in one click.</div>
         </div>
 
         <div class="change-group-title">Included</div>
