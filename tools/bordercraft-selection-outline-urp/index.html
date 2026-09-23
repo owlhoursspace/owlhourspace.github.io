@@ -375,7 +375,7 @@
   <!-- ── Styles ── -->
   <div class="section-wrap" id="styles">
     <div class="section-label">Outline styles</div>
-    <div class="section-title">Two styles, one system</div>
+    <div class="section-title">Two styles, and motion on top</div>
     <div class="algo-grid">
 
       <div class="algo-card">
@@ -398,6 +398,16 @@
         </div>
       </div>
 
+      <div class="algo-card">
+        <div class="algo-tag">Motion</div>
+        <div class="algo-name">Wave, Pulse &amp; Stop-motion</div>
+        <div class="algo-desc">Either style can animate: bumps travelling around the object, the whole outline breathing in and out together, or stepped stop-motion jitter. Wave speed can change while the game runs, so an outline can race like a heartbeat and settle back down smoothly. Free in Hard style; adds the dilate pass in Soft.</div>
+        <div class="algo-cost">
+          <div class="dot on"></div>
+          <div class="dot off"></div><div class="dot off"></div><div class="dot off"></div><div class="dot off"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -410,6 +420,11 @@
       <div class="feature-item">
         <div class="feature-head"><span class="feature-tag">⬡</span><span class="feature-name">Zero-cost-when-idle</span></div>
         <div class="feature-desc">No object selected on a channel, no cost — no texture allocated, no pass enqueued. Most outline effects run every frame regardless.</div>
+      </div>
+
+      <div class="feature-item">
+        <div class="feature-head"><span class="feature-tag">▣</span><span class="feature-name">Screen-space scissor culling</span></div>
+        <div class="feature-desc">When it does run, every pass after the silhouette is clipped to the on-screen box around what's outlined — cost scales with how much of the screen the object covers, not with your render resolution.</div>
       </div>
 
       <div class="feature-item">
