@@ -136,7 +136,8 @@
     background:var(--surface); border:1px solid var(--hairline);
     border-radius:8px; overflow:hidden;
   }
-  .shot-card svg{width:100%; height:auto; display:block;}
+  .shot-card svg,
+  .shot-card img{width:100%; height:auto; display:block;}
   /* The pulse diagram is the one effect on this page that a still frame cannot show,
      so it animates. Double-thump timing to match what the effect actually looks like. */
   /* scale()/opacity rather than animating the SVG r attribute - Safari does not support
@@ -322,135 +323,50 @@
     </div>
   </div>
 
-  <!-- ── Concept diagrams: How it works ── -->
+  <!-- ── Preview: real screenshots ── -->
   <div class="section-wrap" id="editor">
     <div class="section-label">Preview</div>
-    <div class="section-title">How it looks in the Editor</div>
-    <p style="color:var(--ink-soft); font-size:13px; margin-top:-20px; margin-bottom:28px;">Bordercraft is still in development — the diagrams below are concept sketches of the actual UI, not final screenshots.</p>
+    <div class="section-title">How it looks</div>
     <div class="shot-grid cols-2">
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <rect x="40" y="30" width="320" height="200" rx="8" fill="#101B27" stroke="#ECE9E0" stroke-opacity="0.14"/>
-          <rect x="56" y="50" width="288" height="26" rx="4" fill="#16222F"/>
-          <circle cx="72" cy="63" r="6" fill="#8FAE93"/>
-          <rect x="88" y="58" width="140" height="10" rx="2" fill="#ECE9E0" fill-opacity="0.5"/>
-          <rect x="56" y="86" width="288" height="26" rx="4" fill="#16222F" fill-opacity="0.5"/>
-          <rect x="72" cy="99" y="94" width="10" height="10" rx="2" fill="none" stroke="#6E7A69" stroke-width="1.5"/>
-          <rect x="88" y="94" width="160" height="10" rx="2" fill="#ECE9E0" fill-opacity="0.3"/>
-          <rect x="56" y="122" width="288" height="26" rx="4" fill="#16222F" fill-opacity="0.5"/>
-          <rect x="72" y="130" width="10" height="10" rx="2" fill="none" stroke="#6E7A69" stroke-width="1.5"/>
-          <rect x="88" y="130" width="120" height="10" rx="2" fill="#ECE9E0" fill-opacity="0.3"/>
-          <rect x="260" y="180" width="84" height="30" rx="5" fill="#E3A855"/>
-          <text x="302" y="199" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#241a0c">Add</text>
-        </svg>
-        <div class="shot-caption"><strong>Setup Wizard</strong> — scans your URP Renderer assets and adds the Outline feature in one click.</div>
+        <img src="/assets/img/bordercraft/looks.webp" width="1600" height="1067" alt="Four copies of the same character with different outlines - soft glow, hard line, wave and wave with thickness variation - beside the profile Inspector they come from.">
+        <div class="shot-caption"><strong>One outline, many looks</strong> — style, color, gap, wave and thickness all live in a single profile asset.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <rect x="40" y="30" width="320" height="200" rx="8" fill="#101B27" stroke="#ECE9E0" stroke-opacity="0.14"/>
-          <rect x="56" y="52" width="288" height="34" rx="5" fill="#16222F" stroke="#ECE9E0" stroke-opacity="0.1"/>
-          <circle cx="74" cy="69" r="5" fill="#8FAE93"/>
-          <text x="90" y="73" font-family="JetBrains Mono, monospace" font-size="10" fill="#A7B0A1">Channel 0</text>
-          <rect x="200" y="61" width="120" height="16" rx="3" fill="#0C131C" stroke="#ECE9E0" stroke-opacity="0.15"/>
-          <rect x="56" y="94" width="288" height="34" rx="5" fill="#16222F" stroke="#ECE9E0" stroke-opacity="0.1"/>
-          <circle cx="74" cy="111" r="5" fill="#E3A855"/>
-          <text x="90" y="115" font-family="JetBrains Mono, monospace" font-size="10" fill="#A7B0A1">Channel 1</text>
-          <rect x="200" y="103" width="120" height="16" rx="3" fill="#0C131C" stroke="#ECE9E0" stroke-opacity="0.15"/>
-          <rect x="56" y="146" width="150" height="24" rx="4" fill="none" stroke="#6E7A69" stroke-dasharray="4 4"/>
-          <text x="131" y="162" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#6E7A69">+ Add Channel</text>
-        </svg>
-        <div class="shot-caption"><strong>Channel List</strong> — up to four independently-styled outlines, added one click at a time.</div>
+        <img src="/assets/img/bordercraft/wherehidden.webp" width="1600" height="720" loading="lazy" alt="A character half behind a rock: the covered half is outlined, the visible half is not.">
+        <div class="shot-caption"><strong>Show only when hidden</strong> — the covered part is outlined and the part in the clear is not, decided per pixel with no bookkeeping on your side.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <defs><filter id="soft-blur1"><feGaussianBlur stdDeviation="5"/></filter></defs>
-          <rect x="60" y="60" width="120" height="140" rx="14" fill="#8FAE93" opacity="0.7" filter="url(#soft-blur1)"/>
-          <rect x="72" y="72" width="96" height="116" rx="10" fill="#101B27"/>
-          <rect x="220" y="60" width="120" height="140" rx="14" fill="none" stroke="#E3A855" stroke-width="3"/>
-          <rect x="232" y="72" width="96" height="116" rx="10" fill="#101B27"/>
-          <text x="120" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#C7DDC8">Soft</text>
-          <text x="280" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#F2CE97">Hard</text>
-        </svg>
-        <div class="shot-caption"><strong>Soft vs Hard</strong> — a blurred glow, or a crisp hard-edged line at half the render passes.</div>
+        <img src="/assets/img/bordercraft/channels.webp" width="1600" height="720" loading="lazy" alt="Three characters outlined at once in green, red and pink.">
+        <div class="shot-caption"><strong>Several at once</strong> — different looks on screen together, each on its own channel, with no interference between them.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <defs>
-            <filter id="soft-blur2"><feGaussianBlur stdDeviation="6"/></filter>
-          </defs>
-          <rect x="50" y="70" width="110" height="120" rx="12" fill="#8FAE93" opacity="0.65" filter="url(#soft-blur2)"/>
-          <rect x="62" y="82" width="86" height="96" rx="8" fill="#101B27"/>
-          <rect x="240" y="70" width="110" height="120" rx="12" fill="#E3A855" opacity="0.65" filter="url(#soft-blur2)"/>
-          <rect x="252" y="82" width="86" height="96" rx="8" fill="#101B27"/>
-          <text x="105" y="216" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#C7DDC8">Channel 0</text>
-          <text x="295" y="216" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#F2CE97">Channel 1</text>
-        </svg>
-        <div class="shot-caption"><strong>Several at Once</strong> — a different color per channel, shown simultaneously without interfering with each other.</div>
+        <img src="/assets/img/bordercraft/performance.webp" width="1600" height="1067" loading="lazy" alt="Two Frame Debugger captures side by side: 65 events with nothing selected, 68 events with one object outlined.">
+        <div class="shot-caption"><strong>Costs nothing when idle</strong> — with nothing selected, not one of the outline's render passes is in the frame.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <defs><filter id="soft-blur3"><feGaussianBlur stdDeviation="7"/></filter></defs>
-          <rect x="0" y="0" width="200" height="260" fill="#16222F"/>
-          <circle cx="100" cy="130" r="55" fill="#F2CE97" opacity="0.8" filter="url(#soft-blur3)"/>
-          <circle cx="100" cy="130" r="34" fill="#16222F"/>
-          <circle cx="300" cy="130" r="46" fill="none" stroke="#F2CE97" stroke-width="18" stroke-opacity="0.9"/>
-          <circle cx="300" cy="130" r="34" fill="#0C131C"/>
-          <text x="100" y="228" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#A7B0A1">Additive</text>
-          <text x="300" y="228" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#A7B0A1">Opaque</text>
-        </svg>
-        <div class="shot-caption"><strong>Additive vs Opaque</strong> — a glow that lets the background show through, or a solid painted line.</div>
+        <img src="/assets/img/bordercraft/scissor.webp" width="1600" height="1067" loading="lazy" alt="An outlined character with the screen area the outline passes touch shaded as a box around it.">
+        <div class="shot-caption"><strong>Small on screen, small to render</strong> — when it does run, only the box around what's outlined is shaded, not the whole frame.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <rect x="20" y="20" width="360" height="220" rx="4" fill="none" stroke="#6E7A69" stroke-width="1.5" stroke-dasharray="5 6"/>
-          <rect x="252" y="150" width="90" height="70" rx="4" fill="none" stroke="#E3A855" stroke-width="2"/>
-          <circle cx="297" cy="185" r="22" fill="none" stroke="#8FAE93" stroke-width="3"/>
-          <circle cx="297" cy="185" r="12" fill="#101B27"/>
-          <text x="200" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#6E7A69">full screen — not shaded</text>
-          <text x="297" y="236" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#C7DDC8">scissor rect</text>
-        </svg>
-        <div class="shot-caption"><strong>Scissor Culling</strong> — every pass is clipped to the outlined object's on-screen rect, not the full frame.</div>
+        <img src="/assets/img/bordercraft/setup.webp" width="1600" height="1067" loading="lazy" alt="The Setup Wizard with two URP renderers ticked, and the renderer Inspector afterwards showing the outline feature added.">
+        <div class="shot-caption"><strong>Set up in minutes</strong> — the wizard opens itself on first import, adds the feature to the renderers you pick and assigns a default profile.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <defs>
-            <clipPath id="hidden-side"><rect x="200" y="0" width="100" height="260"/></clipPath>
-            <clipPath id="clear-side"><rect x="300" y="0" width="100" height="260"/></clipPath>
-          </defs>
-          <circle cx="100" cy="118" r="40" fill="#22303B"/>
-          <rect x="200" y="24" width="100" height="186" fill="#16222F"/>
-          <circle cx="300" cy="118" r="40" fill="#22303B" clip-path="url(#clear-side)"/>
-          <circle cx="300" cy="118" r="40" fill="none" stroke="#E3A855" stroke-width="3" clip-path="url(#hidden-side)"/>
-          <line x1="300" y1="78" x2="300" y2="158" stroke="#E3A855" stroke-width="3"/>
-          <text x="100" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#6E7A69">in the clear — nothing drawn</text>
-          <text x="300" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#F2CE97">covered — outlined</text>
-        </svg>
-        <div class="shot-caption"><strong>Show Only When Hidden</strong> — the outline fades in on whatever part of the object something else is covering, and vanishes again once it's in the clear. No bookkeeping on your side.</div>
+        <img src="/assets/img/bordercraft/usage.webp" width="1600" height="1067" loading="lazy" alt="A code snippet calling Outliner.SetSelected beside the Outline Target component in the Inspector.">
+        <div class="shot-caption"><strong>One line of code, or none</strong> — call it on any GameObject with no component to add first, or add Outline Target and toggle it in the Editor.</div>
       </div>
 
       <div class="shot-card">
-        <svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="260" fill="#0C131C"/>
-          <defs><filter id="soft-blur5" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter></defs>
-          <circle class="pulse-ring" cx="200" cy="118" r="44" fill="none" stroke="#8FAE93" stroke-width="12" filter="url(#soft-blur5)"/>
-          <circle cx="200" cy="118" r="34" fill="#101B27"/>
-          <text x="200" y="222" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#C7DDC8">waveFrequency = 0</text>
-        </svg>
-        <div class="shot-caption"><strong>Pulse</strong> — drop the wave's frequency to zero and the bumps stop travelling around the edge; the whole outline breathes in and out together instead, like a heartbeat.</div>
+        <img src="/assets/img/bordercraft/profile.webp" width="1600" height="1067" loading="lazy" alt="Diagram: several outlined rocks point at one profile asset, which is assigned to a channel slot in the renderer feature.">
+        <div class="shot-caption"><strong>One profile, many objects</strong> — edit a profile once and every object using it changes with it.</div>
       </div>
 
     </div>
