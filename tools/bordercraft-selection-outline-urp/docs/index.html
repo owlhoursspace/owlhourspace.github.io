@@ -297,7 +297,7 @@
     <!-- HOW IT WORKS -->
     <h2 id="how-it-works">How It Works</h2>
     <p>Bordercraft hooks into URP's RenderGraph pipeline and draws a screen-space outline — a soft blurred glow, or a cheap hard edge line — around whichever GameObjects are currently selected. Selection is driven by flipping a reserved bit on the object's own renderers, so there's no scene setup and no per-project Layer configuration.</p>
-    <p><strong>The outline only runs for a channel while at least one GameObject is currently selected on it. A channel with nothing selected costs nothing.</strong> This is the one thing most screen-space outline effects get wrong — they run their full pass every frame the moment the Renderer Feature is enabled, whether or not anything is actually outlined.</p>
+    <p><strong>The outline only runs for a channel while at least one GameObject is currently selected on it. A channel with nothing selected costs nothing.</strong> A screen-space effect normally runs its passes every frame while its Renderer Feature is enabled. Here the passes are enqueued only when there is something to outline.</p>
 
     <div class="steps">
       <div class="step"><span class="step-num">01</span><div><strong>Scene renders normally</strong><p style="margin:4px 0 0; font-size:13px;">Geometry, skybox, and transparents render through URP as usual.</p></div></div>

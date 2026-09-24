@@ -315,7 +315,7 @@
     <div class="hero-eyebrow">Unity 6 · URP 17+ · RenderGraph</div>
     <h1>Bordercraft - Selection Outline for URP</h1>
     <div class="hero-tagline">Zero-cost selection outline for <em>Unity</em></div>
-    <p class="hero-sub">A screen-space selection outline — soft glow or hard edge — built natively on the URP RenderGraph API. Costs nothing the moment nothing is selected: no texture allocated, no pass enqueued, unlike outline effects that run every frame regardless.</p>
+    <p class="hero-sub">A screen-space selection outline — soft glow or hard edge — built natively on the URP RenderGraph API. Costs nothing the moment nothing is selected: no texture allocated, no pass enqueued.</p>
     <div class="hero-actions">
       <span class="btn-primary is-pending" aria-disabled="true">Coming Soon to Asset Store</span>
       <a href="docs/" class="btn-ghost">Documentation</a>
@@ -419,7 +419,7 @@
 
       <div class="feature-item">
         <div class="feature-head"><span class="feature-tag">⬡</span><span class="feature-name">Zero-cost-when-idle</span></div>
-        <div class="feature-desc">No object selected on a channel, no cost — no texture allocated, no pass enqueued. Most outline effects run every frame regardless.</div>
+        <div class="feature-desc">No object selected on a channel, no cost — no texture allocated, no pass enqueued. A screen-space effect normally runs every frame while it's enabled; these passes are enqueued only when there's something to outline.</div>
       </div>
 
       <div class="feature-item">
