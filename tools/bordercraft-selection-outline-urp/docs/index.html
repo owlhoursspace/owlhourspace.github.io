@@ -580,6 +580,9 @@
     <!-- LIMITATIONS -->
     <h2 id="limitations">Known Limitations</h2>
 
+    <h3>Settings live on the profile, not on the object</h3>
+    <p>Everything outlined on a channel is drawn by one chain of passes using that channel's profile, which is what keeps the cost flat as the number of outlined objects grows. An <code>OutlineTarget</code> chooses which channel an object is on; it has no look settings of its own. Objects that need a different look go on another channel.</p>
+
     <h3>Scissor rect is one shared box per channel, not per object</h3>
     <p>Every currently-outlined object on a channel contributes to a single scissor rect spanning the union of all of them, not a separate shaded region per object. Fine for one-object-at-a-time selection; several outlined objects far apart on screen on the same channel will scissor a rect spanning all of them, growing the shaded (and therefore shaded draw cost) area accordingly.</p>
 
@@ -602,7 +605,7 @@
 
     <!-- RENDERING LAYER USAGE -->
     <h2 id="rendering-layer">Rendering Layer Usage</h2>
-    <p><strong>This package permanently reserves the top 4 bits (28-31) of every GameObject's Rendering Layer Mask</strong> — not however many of the 4 channels you actually configure, all 4 are reserved the moment the package is present in the project, since they're a fixed constant in code rather than something that scales with use.</p>
+    <p><strong>This package permanently reserves the top 4 bits (28-31) of every GameObject's Rendering Layer Mask</strong> — not however many of the 4 channels you actually configure, all 4 are reserved the moment the package is present in the project, since they're a fixed constant in code rather than something that scales with use. Four channels, because each one costs a bit of every GameObject's mask — a bit your project could be using for something else.</p>
     <div class="warn"><strong>Check before importing:</strong> they're taken from the top of the mask specifically because URP projects typically only use bits 0-7 for Light Layers, so the odds of a collision are low — but if your project already uses custom Rendering Layers up near bits 28-31 for something else (lighting, decals, or your own filtering), check <code>Project Settings → Tags and Layers → Rendering Layers</code> before importing, or those layers will conflict with this package's.</div>
 
     <!-- TROUBLESHOOTING -->
