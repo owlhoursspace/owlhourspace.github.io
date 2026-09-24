@@ -449,9 +449,14 @@
 <span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">myGameObject</span>, <span class="kw">false</span>);
 
 <span class="cm">// Select on a specific channel (0-3), routing to a different profile/look:</span>
-<span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">myGameObject</span>, <span class="kw">true</span>, <span class="nu">1</span>);</pre>
+<span class="cl">Outliner</span>.<span class="fn">SetSelected</span>(<span class="nm">myGameObject</span>, <span class="kw">true</span>, <span class="nu">1</span>);
+
+<span class="cm">// The profile a channel draws with, without wiring the asset into a field first:</span>
+<span class="cl">OutlineProfile</span> <span class="nm">profile</span> = <span class="cl">Outliner</span>.<span class="fn">GetProfile</span>();
+<span class="cl">OutlineProfile</span> <span class="nm">enemies</span> = <span class="cl">Outliner</span>.<span class="fn">GetProfile</span>(<span class="nu">1</span>);</pre>
     </div>
     <p>Calling <code>SetSelected</code> is safe on any GameObject, including one that was never previously selected — no scene setup or pre-placed component required.</p>
+    <p><code>GetProfile</code> returns the profile asset itself, or <code>null</code> when that channel has no profile assigned. Everything on the channel shares it, so editing it changes all of them — see <a href="#runtime-patterns">Change a profile at runtime</a> below. With several Renderer assets that put different profiles on the same channel, it returns whichever Renderer's feature loaded first; assign the profile to a field in the Inspector if you need to be specific.</p>
 
     <!-- COMMON PATTERNS -->
     <h3 id="runtime-patterns">Common Patterns</h3>
