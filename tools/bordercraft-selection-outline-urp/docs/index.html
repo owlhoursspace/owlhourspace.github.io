@@ -369,8 +369,8 @@
       <table>
         <thead><tr><th>opaque</th><th>Blend</th><th>Result</th></tr></thead>
         <tbody>
-          <tr><td>Off (default)</td><td>Additive</td><td>The outline color is <strong>added</strong> as light on top of whatever is behind it — always shows the background through it, however solid the color looks. Supports HDR bloom.</td></tr>
-          <tr><td>On</td><td>Opaque (premultiplied alpha)</td><td>The outline <strong>replaces</strong> the background proportionally to Color alpha — fully opaque at full alpha, like a solid painted line.</td></tr>
+          <tr><td>On (default)</td><td>Opaque (premultiplied alpha)</td><td>The outline <strong>replaces</strong> the background proportionally to Color alpha — fully opaque at full alpha, like a solid painted line. Reads the same whether or not the project has Bloom set up, which is why it is the default.</td></tr>
+          <tr><td>Off</td><td>Additive</td><td>The outline color is <strong>added</strong> as light on top of whatever is behind it — always shows the background through it, however solid the color looks. Supports HDR bloom.</td></tr>
         </tbody>
       </table>
     </div>
