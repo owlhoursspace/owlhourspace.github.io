@@ -312,7 +312,7 @@
       <table>
         <thead><tr><th>Requirement</th><th>Version</th></tr></thead>
         <tbody>
-          <tr><td>Unity</td><td>6000.0 or later</td></tr>
+          <tr><td>Unity</td><td>6000.0 or later — tested on 6000.0, 6000.3, 6000.4, 6000.5</td></tr>
           <tr><td>Universal Render Pipeline</td><td>17.0.0 or later</td></tr>
           <tr><td>RenderGraph</td><td>Enabled in Project Settings → Graphics → URP Global Settings</td></tr>
           <tr><td>Render path</td><td>3D Universal Renderer — URP 2D Renderer not tested, not officially supported</td></tr>
@@ -336,8 +336,8 @@
     <p><code>Samples/Demo.unity</code> walks through every feature with an on-screen button panel. The <code>Samples</code> folder is optional — nothing else in the package depends on it, so it is safe to delete.</p>
     <div class="steps">
       <div class="step"><span class="step-num">01</span><span>Run the <strong>Setup Wizard</strong> if you haven't already, so the Outline Renderer Feature is on your URP Renderer.</span></div>
-      <div class="step"><span class="step-num">02</span><span>On the Outline Renderer Feature, put <strong>Demo Channel 0–3</strong> (in <code>Samples/Profiles</code>) into Channel 0–3. The buttons edit these assets directly, so a channel using any other profile won't change.</span></div>
-      <div class="step"><span class="step-num">03</span><span>Open <code>Samples/Demo.unity</code> and press Play.</span></div>
+      <div class="step"><span class="step-num">02</span><span>Open <code>Samples/Demo.unity</code>, select the <strong>Demo Showcase</strong> object, and click <strong>Put These Profiles in the Renderer Feature</strong>. That drops <strong>Demo Channel 0–3</strong> (in <code>Samples/Profiles</code>) into Channel 0–3 of every Renderer carrying the feature, replacing whatever those channels hold. The buttons edit these four assets directly, so a channel using any other profile won't change — you can also assign them by hand instead.</span></div>
+      <div class="step"><span class="step-num">03</span><span>Press Play.</span></div>
     </div>
     <div class="note"><strong>HDR glow:</strong> the Enemy button uses an HDR color, which only glows when HDR is on in your URP Asset and Post Processing is on for the camera. The scene already includes a Global Volume with Bloom, and the panel warns about either setting if it's missing.</div>
     <p>The buttons write into the demo profile assets, so the last look you picked stays in those assets after you exit Play. Press <strong>Reset</strong> to return to the default Soft look.</p>
