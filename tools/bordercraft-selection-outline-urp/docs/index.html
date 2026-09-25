@@ -329,7 +329,7 @@
       <div class="step"><span class="step-num">03</span><span>From code: <code>Outliner.SetSelected(myGameObject, true);</code> — no scene setup, no pre-placed component required.</span></div>
       <div class="step"><span class="step-num">04</span><span>Tune the look by editing the <code>OutlineProfile</code> asset assigned to Channel 0 — style, color, radius, wave, etc. take effect immediately.</span></div>
     </div>
-    <p>You can also create profiles directly via <code>Assets → Create → Bordercraft → Outline Profile</code>, or by clicking <strong>+ Add Channel</strong> on the Outline Renderer Feature's Inspector to wire up a second channel with its own new profile in one click.</p>
+    <p>You can also create profiles directly via <code>Assets → Create → Bordercraft → Outline Profile</code>, or by clicking <strong>New</strong> on a channel row on the Outline Renderer Feature's Inspector, which creates a profile and assigns it to that channel in one click.</p>
 
     <!-- DEMO SCENE -->
     <h2 id="demo-scene">Demo Scene</h2>
@@ -345,7 +345,8 @@
     <!-- CHANNELS -->
     <h2 id="channels">Channels</h2>
     <p>The Renderer Feature's Inspector shows one row per configured channel, <strong>Channel 0</strong> onward, plus a <strong>+ Add Channel</strong> button (up to 4 total). By default only Channel 0 is filled in, so <code>Outliner.SetSelected(go, true)</code> — which defaults to channel 0 — is all most projects need.</p>
-    <p>To show a second, independently-styled outline at the same time (e.g. a different color for enemies vs interactables), click <strong>+ Add Channel</strong>, then select those objects with <code>Outliner.SetSelected(go, true, 1)</code>. Each channel is fully independent — its own profile, its own zero-cost-when-idle gating, its own scissor rect — so an empty or unused slot costs nothing even while others are active.</p>
+    <p><strong>+ Add Channel</strong> only opens the next row — it leaves the profile empty rather than creating an asset in your project for a channel you may not keep. Fill that row by dragging in a profile you already have, or click <strong>New</strong> on the row to create one and assign it in place.</p>
+    <p>To show a second, independently-styled outline at the same time (e.g. a different color for enemies vs interactables), add Channel 1 that way, then select those objects with <code>Outliner.SetSelected(go, true, 1)</code>. Each channel is fully independent — its own profile, its own zero-cost-when-idle gating, its own scissor rect — so an empty or unused slot costs nothing even while others are active.</p>
     <div class="note"><strong>Live status:</strong> in Play mode, each filled-in row shows a status dot (green = at least one object currently selected on that channel, grey = idle) with the active count next to it.</div>
     <div class="warn"><strong>Missing profile warning:</strong> if an object is selected on a channel with no profile assigned, a warning is logged once (not every frame) naming the channel, instead of silently rendering nothing.</div>
 
@@ -396,7 +397,7 @@
     <!-- OUTLINE PROFILE -->
     <h2 id="outline-profile">OutlineProfile</h2>
     <p>An <code>OutlineProfile</code> is a serializable asset describing an outline's look — style, color, radius, wave, etc. It contains no rendering plumbing; that lives entirely in the Renderer Feature.</p>
-    <p><strong>Ways to create a profile:</strong> <code>Assets → Create → Bordercraft → Outline Profile</code>, click <strong>+ Add Channel</strong> on the Outline Renderer Feature's Inspector, or let the Setup Wizard create and assign one automatically.</p>
+    <p><strong>Ways to create a profile:</strong> <code>Assets → Create → Bordercraft → Outline Profile</code>, click <strong>New</strong> on a channel row on the Outline Renderer Feature's Inspector (on a channel that already has one, this replaces the assignment — the old asset stays in the project), or let the Setup Wizard create and assign one automatically.</p>
 
     <h3>Parameters</h3>
     <div class="table-wrap">
