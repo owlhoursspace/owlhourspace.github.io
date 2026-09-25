@@ -314,7 +314,7 @@
         <tbody>
           <tr><td>Unity</td><td>6000.0 or later — tested on 6000.0, 6000.3, 6000.4, 6000.5</td></tr>
           <tr><td>Universal Render Pipeline</td><td>17.0.0 or later</td></tr>
-          <tr><td>RenderGraph</td><td>Enabled in Project Settings → Graphics → URP Global Settings. URP's <strong>Compatibility Mode</strong> is the switch that turns RenderGraph off, so it has to stay unticked</td></tr>
+          <tr><td>RenderGraph</td><td>Enabled in Project Settings → Graphics → URP Global Settings</td></tr>
           <tr><td>Render path</td><td>3D Universal Renderer — URP 2D Renderer not tested, not officially supported</td></tr>
           <tr><td>Platforms</td><td>PC, Mobile — VR/XR not tested, not officially supported</td></tr>
         </tbody>
@@ -621,7 +621,7 @@
     <div class="item-list">
       <div class="item">Confirm the Outline Renderer Feature is added and enabled on the active URP Renderer asset (use the Setup Wizard to check — <code>Tools → Bordercraft → Setup Wizard</code>).</div>
       <div class="item">Confirm a Profile is assigned to the channel you're selecting on — check the Console for a "no Profile is assigned to that channel" warning.</div>
-      <div class="item">Confirm RenderGraph is on. The setting that turns it off is named <strong>Compatibility Mode</strong> (Project Settings → Graphics → URP Global Settings), so a project with that ticked has no RenderGraph for the feature to hook into and draws nothing at all.</div>
+      <div class="item">On Unity 6000.0–6000.2, confirm <strong>Compatibility Mode</strong> is off in <code>Project Settings → Graphics → URP Global Settings</code>. That switch turns RenderGraph off, so there is nothing for the feature to hook into and nothing draws at all. A project upgraded from an older URP often has it ticked so its existing renderer features keep working. Unity deprecated it and hid it from 6000.3 on, so on newer versions there is nothing to check here.</div>
       <div class="item">If using a Wave setting outside Play mode, it only moves while the view repaints (see Known Limitations).</div>
     </div>
 
