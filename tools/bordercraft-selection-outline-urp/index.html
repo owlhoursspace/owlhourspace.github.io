@@ -128,6 +128,15 @@
   }
   .btn-ghost:hover{border-color:rgba(190,205,220,0.32); color:var(--ink);}
 
+  /* ── Video ── */
+  .video-wrap{
+    position:relative; padding-bottom:56.25%; height:0; overflow:hidden;
+    border-radius:8px; border:1px solid var(--hairline);
+    background:var(--surface);
+    box-shadow:0 24px 64px rgba(0,0,0,0.4);
+  }
+  .video-wrap iframe{position:absolute; top:0; left:0; width:100%; height:100%;}
+
   /* ── Screenshot / concept diagram gallery ── */
   .shot-grid{display:grid; gap:16px;}
   .shot-grid.cols-2{grid-template-columns:repeat(2, 1fr);}
@@ -320,6 +329,17 @@
       <span class="btn-primary is-pending" aria-disabled="true">Coming Soon to Asset Store</span>
       <a href="docs/" class="btn-ghost">Documentation</a>
       <a href="changelog/" class="btn-ghost">Changelog</a>
+    </div>
+
+    <div class="video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/-jliWUHfzjc?si=uB0S2fiKqzEHSxeN"
+        title="Bordercraft for URP overview video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 
