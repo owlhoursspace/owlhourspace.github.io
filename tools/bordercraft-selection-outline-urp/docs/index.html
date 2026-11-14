@@ -340,7 +340,7 @@
       <div class="step"><span class="step-num">03</span><span>Press Play.</span></div>
     </div>
     <div class="note"><strong>HDR glow:</strong> the Enemy button uses an HDR color, which only glows when HDR is on in your URP Asset and Post Processing is on for the camera. The scene already includes a Global Volume with Bloom, and the panel warns about either setting if it's missing.</div>
-    <p>The buttons write into the demo profile assets, so the last look you picked stays in those assets after you exit Play. Press <strong>Reset</strong> to return to the default Soft look.</p>
+    <p>The buttons write into the demo profile assets, so the last look you picked stays in those assets after you exit Play. Press <strong>Reset</strong> to go back to the demo's Soft look.</p>
 
     <!-- CHANNELS -->
     <h2 id="channels">Channels</h2>
@@ -356,8 +356,8 @@
       <table>
         <thead><tr><th>Style</th><th>Cost</th><th>Best For</th></tr></thead>
         <tbody>
-          <tr><td>Soft (blurred glow)</td><td class="cost"><span class="on">●●</span><span class="off">○○○</span></td><td>A glowing halo — the default, reads well over any background</td></tr>
-          <tr><td>Hard (cheap edge line)</td><td class="cost"><span class="on">●</span><span class="off">○○○○</span></td><td>A thin, crisp selection outline at the lowest possible cost</td></tr>
+          <tr><td>Soft (blurred glow)</td><td class="cost"><span class="on">●●</span><span class="off">○○○</span></td><td>A glowing halo — reads well over any background</td></tr>
+          <tr><td>Hard (cheap edge line)</td><td class="cost"><span class="on">●</span><span class="off">○○○○</span></td><td>A thin, crisp selection outline at the lowest possible cost — the default</td></tr>
         </tbody>
       </table>
     </div>
@@ -627,7 +627,7 @@
 
     <h4>The outline is see-through even with a solid color</h4>
     <div class="item-list">
-      <div class="item">That's Additive mode (the default) doing exactly what it's designed to do — it adds color as light on top of the background rather than replacing it. Turn on <strong>Opaque</strong> on the profile for a solid line. See Additive vs Opaque above.</div>
+      <div class="item">That's Additive mode — <strong>Opaque</strong> is turned off on the profile — doing exactly what it's designed to do: it adds color as light on top of the background rather than replacing it. Turn <strong>Opaque</strong> back on (the default) for a solid line. See Additive vs Opaque above.</div>
     </div>
 
     <h4>Part of an animated character's outline is missing</h4>
